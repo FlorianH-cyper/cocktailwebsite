@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %} 
+<h1>Parties</h1>
+{% endblock %}
+{% block content %} 
+<h1>My Parties</h1>
+<u1 class="list-group list-group-flush" id="parties">
+  <table>
+    {% for party in user.parties %}
+    <tr class="list-group-item">
+        <td>        
+          <button type="button"class="fancy-button", onClick="goToPartyDetails({{party.id}})">
+          {{ party.name }}
+      </button></td>
+        <td>
+          {{ party.number_of_participants}}
+          <img src = "..\static\images\people.png" alt="peoplePictogram" width="30", height="30"/>
+        </td>
+        <td>
+        {{party.added_drinks}}/{{ party.number_of_drinks_needed}}
+        <img src = "..\static\images\cocktail.png" alt="cocktailPictogram" width="30", height="30"/>
+        </td>
+        <td>
+        <button type="button", class="close", onClick="deleteParty({{party.id}})">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </td>
+      </tr>
+    {%endfor%}
+  </table>
+</u1>
+<form method="POST" class="form-inline">
+    <div class="form-group">
+      <label for="party_name" class="mr-2">Name</label>
+      <input
+        type="name"
+        class="form-control mr-2"
+        id="party_name"
+        name="party_name"
+        placeholder="Enter party name"
+      />
+    </div>
+    <div class="form-group">
+      <label for="participants" class="mr-2">Number of participants</label>
+      <input
+        type="number"
+        class="form-control mr-2"
+        id="participants"
+        name="participants"
+        placeholder="Enter number of participants"
+      />
+    </div>
+    <div class="form-group">
+        <label for="drinks per participant" class="mr-2">Drinks per participant</label>
+        <input
+          type="number"
+          class="form-control mr-2"
+          id="drinksPerParticipant"
+          name="drinksPerParticipant"
+          placeholder="Enter number of drinks per participant"
+        />
+      </div>
+    <button type="submit" class="btn btn-primary">add Party</button>
+  </form>
+
+{% endblock %}

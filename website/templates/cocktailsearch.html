@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title%} 
+CocktailSearch
+{% endblock %}
+
+{% block content %}
+
+<div class="filter-bar">
+    <img src="../static/images/cocktail.png"></img>
+    Search For Cocktails
+    <input type="text" id="cocktailByNamesearch" placeholder="by cocktail name"  value="{% if request.args.get('cocktailName') %}{{ request.args.get('cocktailName') }}{% endif %}"/>
+    <input type="text" id="cocktailByIngredientSearch" placeholder="by ingredients" value="{% if request.args.get('ingredient') %}{{ request.args.get('ingredient') }}{% endif %}"/>
+    <select id="alcoholSelect">
+        <option value="both">alcoholic and non-alcoholic</option>
+        <option {% if request.args.get('alcoholic')  == 'alcoholic' %} selected {% endif %} value="alcoholic">alcoholic</option>
+        <option {% if request.args.get('alcoholic')  == 'non-alcoholic' %} selected {% endif %}  value="non-alcoholic">non-alcoholic</option>
+    </select>
+    for
+    <select id="partySelect" onChange="fetchPartyDetails()">
+        {% for party in user.parties %}
+        <option value = {{party.id}}>{{party.name}} ({{party.added_drinks}} / {{party.number_of_drinks_needed}})</option>
+        {% endfor %}
+    </select>
+    <img src="../static/images/cocktail.png"></img> 
+</div>
+<p/>
+<p/>
+<div class="searchResults">
+{% if cocktails %}
+{{cocktails|length}} results
+<table>
+    {% for cocktail in cocktails%}
+<tr>
+    <td>
+        <img src={{cocktail.image}} alt="cocktailImage" width="50px"/>
+    </td>
+    <td>
+    {{cocktail.name}}
+    </td>
+    <td>
+        ({{cocktail.number_of_ingredients}}) {{cocktail.all_ingredients}}
+    </td>
+    <td>
+        <button class="fancy-button" onClick="showCocktailPopup({{cocktail.id}})"> Details</button>
+    </td>
+    <td style="display: flex;">
+        <button  onClick="onAddCocktail({{cocktail.id}})" style="padding: 0; border: none; background: white; margin-right: 5px; margin-top: 10px" type="sumbit"> <img width="20px" src="../static/images/add.jpg"/></button>
+        <input id="addCocktailInput-{{cocktail.id}}" style="margin-top: 10px; width: 80px" type="number" placeholder="# drinks"/>
+    </td>
+</tr>
+<div class="complete-popover" id="popover-{{cocktail.id}}">
+    <h2 class="heading">{{cocktail.name}}</h2>
+    <button class="close-button" onClick="hideCocktailPopup({{cocktail.id}})">X</button>
+    <div style="display:flex; align-item: center">
+    <img src="{{cocktail.image}}" class="left-image"/>
+    <div class="right-text">{{cocktail.instructions}}</div>
+    </div>
+</div>
+{% endfor %}
+<table>
+
+{% else %}
+<p>No results</p>
+{% endif %}
+</div>
+
+{% endblock %}

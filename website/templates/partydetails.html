@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %} 
+{% endblock %}
+{% block content %} 
+<h1>{{party.name}}</h1>
+<p/>
+{% if party.number_of_drinks_needed > party.added_drinks %}
+    Missing {{party.number_of_drinks_needed - party.added_drinks}} drinks</h2>
+{% else %}
+    Party is complete
+{% endif %}
+<div class="horizontalcontainer">
+    <div class="box">
+        Menu
+<table>
+    {% for menuitem in party.menu_items %}
+    <tr>
+        <td>
+            <img src={{menuitem.cocktail.image}} alt="cocktailImage" width="50px"/>
+        </td>
+        <td>
+        {{menuitem.cocktail.name}}
+        </td>
+        <td>
+            ({{menuitem.cocktail.number_of_ingredients}}) {{menuitem.cocktail.all_ingredients}}
+        </td>
+        <td>{{menuitem.amount}}</td>
+        <td>
+            <button type="button", class="close", onClick="deleteMenuitem({{menuitem.id}}, {{party.id}})">
+                <span aria-hidden="true">&times;</span>
+            </button>    
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+<div class="box">
+    shopping-list
+    <table>
+        {% for key in shopping_list_view %}
+        <tr>
+            <td>
+                {{key}}
+            </td>
+            <td>
+                {{shopping_list_view[key]}}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+</div>
+{% endblock %}
