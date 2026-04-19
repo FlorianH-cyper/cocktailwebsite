@@ -163,11 +163,17 @@ button {
 
 /* Flexbox items (boxes) */
 .box {
-  width: 50%;
-  /* Set the width of each box */
   text-align: center;
   /* Center the text inside each box */
   font-size: 18px;
+}
+
+.box:first-child {
+  width: 65%;
+}
+
+.box:last-child {
+  width: 35%;
 }
 
 .box table {
