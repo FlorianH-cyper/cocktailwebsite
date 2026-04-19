@@ -1,66 +1,74 @@
 {% extends "base.html" %}
-{% block title %} 
-<h1>Parties</h1>
-{% endblock %}
-{% block content %} 
-<h1>My Parties</h1>
-<u1 class="list-group list-group-flush" id="parties">
-  <table>
-    {% for party in user.parties %}
-    <tr class="list-group-item">
-        <td>        
-          <button type="button"class="fancy-button", onClick="goToPartyDetails({{party.id}})">
-          {{ party.name }}
-      </button></td>
-        <td>
-          {{ party.number_of_participants}}
-          <img src = "..\static\images\people.png" alt="peoplePictogram" width="30", height="30"/>
-        </td>
-        <td>
-        {{party.added_drinks}}/{{ party.number_of_drinks_needed}}
-        <img src = "..\static\images\cocktail.png" alt="cocktailPictogram" width="30", height="30"/>
-        </td>
-        <td>
-        <button type="button", class="close", onClick="deleteParty({{party.id}})">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        </td>
-      </tr>
-    {%endfor%}
-  </table>
-</u1>
-<form method="POST" class="form-inline">
-    <div class="form-group">
-      <label for="party_name" class="mr-2">Name</label>
-      <input
-        type="name"
-        class="form-control mr-2"
-        id="party_name"
-        name="party_name"
-        placeholder="Enter party name"
-      />
-    </div>
-    <div class="form-group">
-      <label for="participants" class="mr-2">Number of participants</label>
-      <input
-        type="number"
-        class="form-control mr-2"
-        id="participants"
-        name="participants"
-        placeholder="Enter number of participants"
-      />
-    </div>
-    <div class="form-group">
-        <label for="drinks per participant" class="mr-2">Drinks per participant</label>
-        <input
-          type="number"
-          class="form-control mr-2"
-          id="drinksPerParticipant"
-          name="drinksPerParticipant"
-          placeholder="Enter number of drinks per participant"
-        />
+{% block title %}Parties{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
+      <div>
+        <h1 class="mb-1">My Parties</h1>
+        <p class="text-muted mb-0">Manage your guest list, cocktails and shopping details in one place.</p>
       </div>
-    <button type="submit" class="btn btn-primary">add Party</button>
-  </form>
+    </div>
 
+    {% if user.parties %}
+    <div class="card shadow-sm mb-4 party-card">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0 party-table">
+          <thead class="thead-light">
+            <tr>
+              <th>Name</th>
+              <th>Guests</th>
+              <th>Drinks</th>
+              <th class="text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for party in user.parties %}
+            <tr>
+              <td>
+                <button type="button" class="btn btn-link p-0 party-link" onclick="goToPartyDetails({{ party.id }})">{{
+                  party.name }}</button>
+              </td>
+              <td><span class="badge badge-secondary">{{ party.number_of_participants }}</span></td>
+              <td>{{ party.added_drinks }}/{{ party.number_of_drinks_needed }}</td>
+              <td class="text-right">
+                <button type="button" class="btn btn-sm btn-outline-danger"
+                  onclick="deleteParty({{ party.id }})">Remove</button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {% else %}
+    <div class="alert alert-info">You have no parties yet. Add one below to get started.</div>
+    {% endif %}
+
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h5 mb-3">Create a new party</h2>
+        <form method="POST" class="form-row align-items-end">
+          <div class="form-group col-md-4">
+            <label for="party_name">Party Name</label>
+            <input type="text" class="form-control" id="party_name" name="party_name" placeholder="Enter party name" />
+          </div>
+          <div class="form-group col-md-3">
+            <label for="participants">Guests</label>
+            <input type="number" class="form-control" id="participants" name="participants"
+              placeholder="Number of guests" />
+          </div>
+          <div class="form-group col-md-3">
+            <label for="drinksPerParticipant">Drinks per guest</label>
+            <input type="number" class="form-control" id="drinksPerParticipant" name="drinksPerParticipant"
+              placeholder="Drinks per guest" />
+          </div>
+          <div class="form-group col-md-2">
+            <button type="submit" class="btn btn-primary btn-block">Add party</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
