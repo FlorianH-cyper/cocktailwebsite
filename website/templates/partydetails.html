@@ -1,71 +1,123 @@
 {% extends "base.html" %}
-{% block title %}
-{% endblock %}
+{% block title %}{{ party.name }}{% endblock %}
 {% block content %}
-<h1>{{party.name}}</h1>
-<p />
-{% if party.number_of_drinks_needed > party.added_drinks %}
-Missing {{party.number_of_drinks_needed - party.added_drinks}} drinks</h2>
-{% else %}
-Party is complete
-{% endif %}
-<div class="horizontalcontainer">
-    <div class="box">
-        Menu
-        <table class="table table-striped">
-            {% for menuitem in party.menu_items %}
-            <tr>
-                <td>
-                    <img src={{menuitem.cocktail.image}} alt="cocktailImage" width="50px" />
-                </td>
-                <td>
-                    {{menuitem.cocktail.name}}
-                </td>
-                <td>
-                    ({{menuitem.cocktail.number_of_ingredients}}) {{menuitem.cocktail.all_ingredients}}
-                </td>
-                <td>{{menuitem.amount}}</td>
-                <td>
-                    <div style="display: flex; gap: 5px; align-items: center;">
-                        <button type="button" class="fancy-button" data-toggle="collapse"
-                            data-target="#instructions-{{menuitem.id}}" aria-expanded="false"
-                            aria-controls="instructions-{{menuitem.id}}">
-                            Recipe
-                        </button>
-                        <button type="button" class="close" onClick="deleteMenuitem({{menuitem.id}}, {{party.id}})"
-                            style="margin: 0;">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="5" class="p-0">
-                    <div class="collapse" id="instructions-{{menuitem.id}}">
-                        <div class="card card-body m-2">
-                            <h6>Preparation Instructions:</h6>
-                            <p class="mb-0">{{menuitem.cocktail.instructions}}</p>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
-    <div class="box">
-        shopping-list
-        <table class="table table-striped">
-            {% for key in shopping_list_view %}
-            <tr>
-                <td>
-                    {{key}}
-                </td>
-                <td>
-                    {{shopping_list_view[key]}}
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
+
+<div class="page-header">
+    <div class="page-header__row">
+        <div>
+            <h1 class="page-header__title">{{ party.name }}</h1>
+            <p class="page-header__subtitle">
+                {% if party.number_of_drinks_needed > party.added_drinks %}
+                Still missing {{ party.number_of_drinks_needed - party.added_drinks }} drinks.
+                {% else %}
+                Party is complete and ready to go.
+                {% endif %}
+            </p>
+        </div>
+        <div class="row-actions">
+            {% if party.number_of_drinks_needed > party.added_drinks %}
+            <span class="badge badge--warning">{{ party.added_drinks }} / {{ party.number_of_drinks_needed }}
+                drinks</span>
+            {% else %}
+            <span class="badge badge--success">Complete</span>
+            {% endif %}
+            <a href="/cocktailsearch" class="btn btn--secondary btn--sm">Add cocktails</a>
+        </div>
     </div>
 </div>
+
+<div class="split">
+    <div class="card">
+        <div class="card__header">
+            <div>
+                <h2 class="card__title">Menu</h2>
+                <p class="card__subtitle">{{ party.menu_items|length }} cocktail{{ 's' if party.menu_items|length != 1
+                    else '' }}</p>
+            </div>
+        </div>
+        <div class="table-wrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Cocktail</th>
+                        <th>Qty</th>
+                        <th class="cell--right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for menuitem in party.menu_items %}
+                    <tr>
+                        <td class="cell--shrink">
+                            <img class="cocktail-thumb" src="{{ menuitem.cocktail.image }}"
+                                alt="{{ menuitem.cocktail.name }}" />
+                        </td>
+                        <td>
+                            <div class="cocktail-name">{{ menuitem.cocktail.name }}</div>
+                            <div class="cocktail-ingredients">{{ menuitem.cocktail.all_ingredients }}</div>
+                        </td>
+                        <td><span class="badge badge--brand">{{ menuitem.amount }}</span></td>
+                        <td class="cell--right">
+                            <div class="row-actions">
+                                <button type="button" class="btn btn--secondary btn--sm" data-recipe-trigger
+                                    data-recipe-name="{{ menuitem.cocktail.name }}"
+                                    data-recipe-image="{{ menuitem.cocktail.image }}"
+                                    data-recipe-instructions="{{ menuitem.cocktail.instructions }}">
+                                    Recipe
+                                </button>
+                                <button type="button" class="btn btn--outline-danger btn--sm"
+                                    data-delete-menuitem="{{ menuitem.id }}" data-party-id="{{ party.id }}">
+                                    Remove
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4">
+                            <div class="empty-state" style="border: none; padding: var(--space-6) 0;">
+                                <p class="muted">No cocktails added yet.</p>
+                                <a class="btn btn--sm" href="/cocktailsearch">Browse cocktails</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card__header">
+            <div>
+                <h2 class="card__title">Shopping list</h2>
+                <p class="card__subtitle">All ingredients combined</p>
+            </div>
+        </div>
+        <div class="table-wrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Ingredient</th>
+                        <th class="cell--right">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key in shopping_list_view %}
+                    <tr>
+                        <td>{{ key }}</td>
+                        <td class="cell--right">{{ shopping_list_view[key] }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="2" class="muted text-center" style="padding: var(--space-6);">Add cocktails to see
+                            your shopping list.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

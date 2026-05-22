@@ -1,74 +1,105 @@
 {% extends "base.html" %}
 {% block title %}Parties{% endblock %}
 {% block content %}
-<div class="row justify-content-center">
-  <div class="col-lg-10">
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
-      <div>
-        <h1 class="mb-1">My Parties</h1>
-        <p class="text-muted mb-0">Manage your guest list, cocktails and shopping details in one place.</p>
-      </div>
-    </div>
 
-    {% if user.parties %}
-    <div class="card shadow-sm mb-4 party-card">
-      <div class="table-responsive">
-        <table class="table table-hover mb-0 party-table">
-          <thead class="thead-light">
-            <tr>
-              <th>Name</th>
-              <th>Guests</th>
-              <th>Drinks</th>
-              <th class="text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for party in user.parties %}
-            <tr>
-              <td>
-                <button type="button" class="btn btn-link p-0 party-link" onclick="goToPartyDetails({{ party.id }})">{{
-                  party.name }}</button>
-              </td>
-              <td><span class="badge badge-secondary">{{ party.number_of_participants }}</span></td>
-              <td>{{ party.added_drinks }}/{{ party.number_of_drinks_needed }}</td>
-              <td class="text-right">
-                <button type="button" class="btn btn-sm btn-outline-danger"
-                  onclick="deleteParty({{ party.id }})">Remove</button>
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
+<div class="page-header">
+    <div class="page-header__row">
+        <div>
+            <h1 class="page-header__title">My Parties</h1>
+            <p class="page-header__subtitle">Plan your guest list, drinks and shopping in one place.</p>
+        </div>
     </div>
-    {% else %}
-    <div class="alert alert-info">You have no parties yet. Add one below to get started.</div>
-    {% endif %}
-
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h2 class="h5 mb-3">Create a new party</h2>
-        <form method="POST" class="form-row align-items-end">
-          <div class="form-group col-md-4">
-            <label for="party_name">Party Name</label>
-            <input type="text" class="form-control" id="party_name" name="party_name" placeholder="Enter party name" />
-          </div>
-          <div class="form-group col-md-3">
-            <label for="participants">Guests</label>
-            <input type="number" class="form-control" id="participants" name="participants"
-              placeholder="Number of guests" />
-          </div>
-          <div class="form-group col-md-3">
-            <label for="drinksPerParticipant">Drinks per guest</label>
-            <input type="number" class="form-control" id="drinksPerParticipant" name="drinksPerParticipant"
-              placeholder="Drinks per guest" />
-          </div>
-          <div class="form-group col-md-2">
-            <button type="submit" class="btn btn-primary btn-block">Add party</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
 </div>
+
+{% if user.parties %}
+<div class="card mb-4">
+    <div class="card__header">
+        <div>
+            <h2 class="card__title">All parties</h2>
+            <p class="card__subtitle">{{ user.parties|length }} total</p>
+        </div>
+    </div>
+    <div class="table-wrap">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Guests</th>
+                    <th>Drinks</th>
+                    <th class="cell--right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for party in user.parties %}
+                <tr>
+                    <td>
+                        <button type="button" class="btn btn--ghost btn--sm" data-go-party="{{ party.id }}"
+                            style="padding-left: 0; padding-right: 0; color: var(--text-strong); font-weight: 600;">
+                            {{ party.name }}
+                        </button>
+                    </td>
+                    <td><span class="badge">{{ party.number_of_participants }}</span></td>
+                    <td>
+                        {% if party.added_drinks >= party.number_of_drinks_needed %}
+                        <span class="badge badge--success">{{ party.added_drinks }} / {{ party.number_of_drinks_needed
+                            }}</span>
+                        {% else %}
+                        <span class="badge badge--warning">{{ party.added_drinks }} / {{ party.number_of_drinks_needed
+                            }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="cell--right">
+                        <div class="row-actions">
+                            <button type="button" class="btn btn--secondary btn--sm"
+                                data-go-party="{{ party.id }}">Open</button>
+                            <button type="button" class="btn btn--outline-danger btn--sm"
+                                data-delete-party="{{ party.id }}">Remove</button>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<div class="empty-state mb-4">
+    <h3 style="margin-top: 0;">No parties yet</h3>
+    <p class="muted">Create your first party below to get started.</p>
+</div>
+{% endif %}
+
+<div class="card">
+    <div class="card__header">
+        <div>
+            <h2 class="card__title">Create a new party</h2>
+            <p class="card__subtitle">Tell us a bit about the event.</p>
+        </div>
+    </div>
+    <div class="card__body">
+        <form method="POST" class="form-stack">
+            <div class="form-grid">
+                <div class="field col-6">
+                    <label class="field__label" for="party_name">Party Name</label>
+                    <input class="input" type="text" id="party_name" name="party_name"
+                        placeholder="Saturday Cocktail Night" required />
+                </div>
+                <div class="field col-3">
+                    <label class="field__label" for="participants">Guests</label>
+                    <input class="input" type="number" id="participants" name="participants" min="1" placeholder="12"
+                        required />
+                </div>
+                <div class="field col-3">
+                    <label class="field__label" for="drinksPerParticipant">Drinks / guest</label>
+                    <input class="input" type="number" id="drinksPerParticipant" name="drinksPerParticipant" min="1"
+                        placeholder="3" required />
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn">Add party</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 {% endblock %}
