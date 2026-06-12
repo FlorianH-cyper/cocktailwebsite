@@ -16,7 +16,7 @@ def create_app():
     db_path = os.path.abspath(os.environ.get('DATABASE_PATH', DEFAULT_DB_PATH))
     os.makedirs(os.path.dirname(db_path), exist_ok=True)
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
-    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 31536000  # cache static assets for 1 year
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0 if os.environ.get('FLASK_DEBUG') == '1' else 31536000
     db.init_app(app) # initializes database with app
 
     from .views import views

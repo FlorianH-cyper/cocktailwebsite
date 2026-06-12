@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}?v=2" />
     <script>
         // Apply theme as early as possible to avoid flash of wrong theme.
         (function () {
@@ -131,22 +131,12 @@
             </div>
             <div class="modal__body">
                 <img id="recipeModalImage" class="modal__image" alt="" />
-                <div class="modal__rating">
-                    <div class="modal__rating-summary muted" id="recipeModalRatingSummary"></div>
-                    <div class="star-rating" id="recipeModalStarRating" data-rating-input="" aria-label="Rate cocktail">
-                        <button type="button" class="star-rating__star" data-star="1" aria-label="1 star">★</button>
-                        <button type="button" class="star-rating__star" data-star="2" aria-label="2 stars">★</button>
-                        <button type="button" class="star-rating__star" data-star="3" aria-label="3 stars">★</button>
-                        <button type="button" class="star-rating__star" data-star="4" aria-label="4 stars">★</button>
-                        <button type="button" class="star-rating__star" data-star="5" aria-label="5 stars">★</button>
-                    </div>
-                </div>
                 <div id="recipeModalText" class="modal__text"></div>
             </div>
         </div>
     </div>
 
-    <script src="{{ url_for('static', filename='index.js') }}"></script>
+    <script src="{{ url_for('static', filename='index.js') }}?v=2"></script>
 </body>
 
 </html>

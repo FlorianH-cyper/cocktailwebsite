@@ -104,10 +104,7 @@
                                 <button type="button" class="btn btn--secondary btn--sm" data-recipe-trigger
                                     data-recipe-id="{{ cocktail.id }}"
                                     data-recipe-name="{{ cocktail.name }}" data-recipe-image="{{ cocktail.image }}"
-                                    data-recipe-instructions="{{ cocktail.instructions }}"
-                                    data-recipe-avg="{{ rating.avg or '' }}"
-                                    data-recipe-count="{{ rating.count or 0 }}"
-                                    data-recipe-user-stars="{{ rating.user_stars or '' }}">
+                                    data-recipe-instructions="{{ cocktail.instructions }}">
                                     Recipe
                                 </button>
                                 <button type="button" class="btn btn--sm" data-add-cocktail="{{ cocktail.id }}">+

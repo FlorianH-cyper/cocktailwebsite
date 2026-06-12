@@ -29,8 +29,6 @@
     const modalTitle = document.getElementById('recipeModalTitle');
     const modalImage = document.getElementById('recipeModalImage');
     const modalText = document.getElementById('recipeModalText');
-    const modalRatingSummary = document.getElementById('recipeModalRatingSummary');
-    const modalStarRating = document.getElementById('recipeModalStarRating');
 
     // ---------- Rating Modal ----------
     const ratingModal = document.getElementById('ratingModal');
@@ -129,26 +127,18 @@
         document.querySelectorAll('[data-rating-input="' + cocktailId + '"]').forEach(function (el) {
             setStarRatingState(el, summary.user_stars);
         });
-        document.querySelectorAll('[data-recipe-trigger][data-recipe-id="' + cocktailId + '"]').forEach(function (el) {
-            el.setAttribute('data-recipe-avg', summary.avg != null ? String(summary.avg) : '');
-            el.setAttribute('data-recipe-count', String(summary.count || 0));
-            el.setAttribute('data-recipe-user-stars', summary.user_stars != null ? String(summary.user_stars) : '');
-        });
     }
 
     function submitRating(cocktailId, stars) {
         return fetch('/api/cocktails/' + cocktailId + '/rate', {
             method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ stars: stars })
         }).then(function (response) {
             if (!response.ok) throw new Error('Rating failed');
             return response.json();
         }).then(function (summary) {
             updateRatingDisplays(cocktailId, summary);
-            if (modalStarRating && modalStarRating.getAttribute('data-rating-input') === String(cocktailId)) {
-                updateRatingSummaryElement(modalRatingSummary, summary);
-                setStarRatingState(modalStarRating, summary.user_stars);
-            }
             if (ratingModal && ratingModal.classList.contains('is-open')
                 && ratingModal.getAttribute('data-cocktail-id') === String(cocktailId)) {
                 return refreshRatingModal(cocktailId);
@@ -198,14 +188,6 @@
         modalImage.src = data.image || '';
         modalImage.alt = data.name || '';
         modalText.textContent = data.instructions || 'No instructions available.';
-        if (modalStarRating) {
-            modalStarRating.setAttribute('data-rating-input', data.id ? String(data.id) : '');
-        }
-        updateRatingSummaryElement(modalRatingSummary, {
-            avg: data.avg,
-            count: data.count || 0
-        });
-        setStarRatingState(modalStarRating, data.userStars);
         modal.classList.add('is-open');
         modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
@@ -243,10 +225,12 @@
         }
     });
 
-    // Recipe buttons (including rows added by live search)
+    // Rating trigger, star picker, recipe, and add buttons (delegated — works for live search rows)
     document.addEventListener('click', function (e) {
         const ratingTrigger = e.target.closest('[data-rating-trigger]');
         if (ratingTrigger) {
+            e.preventDefault();
+            e.stopPropagation();
             openRatingModal(
                 ratingTrigger.getAttribute('data-rating-trigger'),
                 ratingTrigger.getAttribute('data-cocktail-name')
@@ -254,8 +238,9 @@
             return;
         }
 
-        const starBtn = e.target.closest('.star-rating__star');
+        const starBtn = e.target.closest('#ratingModalStarPicker .star-rating__star');
         if (starBtn) {
+            e.preventDefault();
             const ratingInput = starBtn.closest('[data-rating-input]');
             const cocktailId = ratingInput ? ratingInput.getAttribute('data-rating-input') : '';
             const stars = Number(starBtn.getAttribute('data-star'));
@@ -268,13 +253,9 @@
         const recipeBtn = e.target.closest('[data-recipe-trigger]');
         if (recipeBtn) {
             openRecipeModal({
-                id: recipeBtn.getAttribute('data-recipe-id'),
                 name: recipeBtn.getAttribute('data-recipe-name'),
                 image: recipeBtn.getAttribute('data-recipe-image'),
-                instructions: recipeBtn.getAttribute('data-recipe-instructions'),
-                avg: recipeBtn.getAttribute('data-recipe-avg') || null,
-                count: Number(recipeBtn.getAttribute('data-recipe-count') || 0),
-                userStars: recipeBtn.getAttribute('data-recipe-user-stars') || null
+                instructions: recipeBtn.getAttribute('data-recipe-instructions')
             });
             return;
         }
@@ -447,9 +428,6 @@
         recipeBtn.setAttribute('data-recipe-name', cocktail.name);
         recipeBtn.setAttribute('data-recipe-image', cocktail.image);
         recipeBtn.setAttribute('data-recipe-instructions', cocktail.instructions);
-        recipeBtn.setAttribute('data-recipe-avg', cocktail.avg_rating != null ? String(cocktail.avg_rating) : '');
-        recipeBtn.setAttribute('data-recipe-count', String(cocktail.rating_count || 0));
-        recipeBtn.setAttribute('data-recipe-user-stars', cocktail.user_stars != null ? String(cocktail.user_stars) : '');
         recipeBtn.textContent = 'Recipe';
 
         const addBtn = document.createElement('button');
@@ -541,7 +519,7 @@
     document.querySelectorAll('[data-rating-trigger]').forEach(function (el) {
         setRatingTriggerState(el, el.getAttribute('data-user-stars'));
     });
-    document.querySelectorAll('#recipeModalStarRating, #ratingModalStarPicker').forEach(function (el) {
-        setStarRatingState(el, el.getAttribute('data-user-stars'));
-    });
+    if (ratingModalStarPicker) {
+        setStarRatingState(ratingModalStarPicker, ratingModalStarPicker.getAttribute('data-user-stars'));
+    }
 })();
