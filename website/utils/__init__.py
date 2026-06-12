@@ -1,4 +1,4 @@
-from ..models import Cocktail, Rating
+from ..models import Cocktail, Rating, User
 from .. import db
 from sqlalchemy import func
 
@@ -109,3 +109,31 @@ def get_ratings_for_cocktails(cocktail_ids, user_id=None):
 def get_cocktail_rating_summary(cocktail_id, user_id=None):
     ratings = get_ratings_for_cocktails([cocktail_id], user_id=user_id)
     return ratings.get(cocktail_id, {"avg": None, "count": 0, "user_stars": None})
+
+
+def _rating_user_display_name(user):
+    if user.first_name:
+        return user.first_name
+    if user.email:
+        return user.email.split("@", 1)[0]
+    return "User"
+
+
+def get_cocktail_ratings_detail(cocktail_id, user_id=None):
+    summary = get_cocktail_rating_summary(cocktail_id, user_id=user_id)
+    rows = (
+        db.session.query(Rating, User)
+        .join(User, Rating.user_id == User.id)
+        .filter(Rating.cocktail_id == cocktail_id)
+        .order_by(Rating.stars.desc(), User.first_name, User.email)
+        .all()
+    )
+    ratings = [
+        {
+            "user_name": _rating_user_display_name(user),
+            "stars": rating.stars,
+            "is_you": user_id is not None and rating.user_id == user_id,
+        }
+        for rating, user in rows
+    ]
+    return {"summary": summary, "ratings": ratings}

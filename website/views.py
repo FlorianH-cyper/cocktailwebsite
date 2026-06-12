@@ -12,6 +12,7 @@ from website.utils import (
     cocktail_thumb_url,
     get_ratings_for_cocktails,
     get_cocktail_rating_summary,
+    get_cocktail_ratings_detail,
 )
 views = Blueprint('views', __name__) # set up view blueprint for flask app
 
@@ -173,6 +174,16 @@ def add_cocktail_to_party():
     db.session.commit()
             
     return jsonify({}) # returns empty response
+
+
+@views.route('/api/cocktails/<int:cocktail_id>/ratings', methods=['GET'])
+@login_required
+def get_cocktail_ratings(cocktail_id):
+    cocktail = Cocktail.query.get(cocktail_id)
+    if not cocktail:
+        return jsonify({"error": "cocktail not found"}), 404
+
+    return jsonify(get_cocktail_ratings_detail(cocktail_id, current_user.id))
 
 
 @views.route('/api/cocktails/<int:cocktail_id>/rate', methods=['POST'])

@@ -32,10 +32,66 @@
     const modalRatingSummary = document.getElementById('recipeModalRatingSummary');
     const modalStarRating = document.getElementById('recipeModalStarRating');
 
+    // ---------- Rating Modal ----------
+    const ratingModal = document.getElementById('ratingModal');
+    const ratingModalTitle = document.getElementById('ratingModalTitle');
+    const ratingModalSummary = document.getElementById('ratingModalSummary');
+    const ratingModalStarPicker = document.getElementById('ratingModalStarPicker');
+    const ratingModalHint = document.getElementById('ratingModalHint');
+    const ratingModalList = document.getElementById('ratingModalList');
+
     function formatRatingSummary(avg, count) {
         if (!count) return 'No ratings yet';
         var label = count === 1 ? 'rating' : 'ratings';
         return '★ ' + avg + ' · ' + count + ' ' + label;
+    }
+
+    function setRatingTriggerState(button, userStars) {
+        if (!button) return;
+        var stars = userStars ? Number(userStars) : 0;
+        button.classList.toggle('rating-trigger--rated', stars > 0);
+        button.setAttribute('data-user-stars', userStars || '');
+        var cocktailName = button.getAttribute('data-cocktail-name') || 'cocktail';
+        button.setAttribute(
+            'aria-label',
+            stars > 0
+                ? 'Your rating: ' + stars + ' stars. View or change rating.'
+                : 'Rate ' + cocktailName
+        );
+    }
+
+    function renderRatingList(ratings) {
+        if (!ratingModalList) return;
+        if (!ratings || ratings.length === 0) {
+            ratingModalList.innerHTML = '<p class="muted rating-list__empty">No ratings yet. Be the first!</p>';
+            return;
+        }
+        ratingModalList.innerHTML = ratings.map(function (entry) {
+            var label = entry.is_you ? entry.user_name + ' (you)' : entry.user_name;
+            var stars = '★'.repeat(entry.stars) + '☆'.repeat(5 - entry.stars);
+            return (
+                '<div class="rating-list__item">' +
+                '<span class="rating-list__name">' + label + '</span>' +
+                '<span class="rating-list__stars" aria-label="' + entry.stars + ' out of 5 stars">' + stars + '</span>' +
+                '</div>'
+            );
+        }).join('');
+    }
+
+    function renderRatingModal(data) {
+        if (!data || !data.summary) return;
+        updateRatingSummaryElement(ratingModalSummary, data.summary);
+        if (ratingModalStarPicker) {
+            var cocktailId = ratingModal ? ratingModal.getAttribute('data-cocktail-id') : '';
+            ratingModalStarPicker.setAttribute('data-rating-input', cocktailId || '');
+            setStarRatingState(ratingModalStarPicker, data.summary.user_stars);
+        }
+        if (ratingModalHint) {
+            ratingModalHint.textContent = data.summary.user_stars
+                ? 'Click stars to update your rating.'
+                : 'Click stars to add your rating.';
+        }
+        renderRatingList(data.ratings);
     }
 
     function setStarRatingState(container, userStars) {
@@ -49,6 +105,15 @@
         });
     }
 
+    function refreshRatingModal(cocktailId) {
+        return fetch('/api/cocktails/' + cocktailId + '/ratings')
+            .then(function (response) {
+                if (!response.ok) throw new Error('Failed to load ratings');
+                return response.json();
+            })
+            .then(renderRatingModal);
+    }
+
     function updateRatingSummaryElement(element, summary) {
         if (!element || !summary) return;
         element.textContent = formatRatingSummary(summary.avg, summary.count);
@@ -57,6 +122,9 @@
     function updateRatingDisplays(cocktailId, summary) {
         document.querySelectorAll('[data-rating-summary="' + cocktailId + '"]').forEach(function (el) {
             updateRatingSummaryElement(el, summary);
+        });
+        document.querySelectorAll('[data-rating-trigger="' + cocktailId + '"]').forEach(function (el) {
+            setRatingTriggerState(el, summary.user_stars);
         });
         document.querySelectorAll('[data-rating-input="' + cocktailId + '"]').forEach(function (el) {
             setStarRatingState(el, summary.user_stars);
@@ -79,12 +147,53 @@
             updateRatingDisplays(cocktailId, summary);
             if (modalStarRating && modalStarRating.getAttribute('data-rating-input') === String(cocktailId)) {
                 updateRatingSummaryElement(modalRatingSummary, summary);
+                setStarRatingState(modalStarRating, summary.user_stars);
+            }
+            if (ratingModal && ratingModal.classList.contains('is-open')
+                && ratingModal.getAttribute('data-cocktail-id') === String(cocktailId)) {
+                return refreshRatingModal(cocktailId);
+            }
+        });
+    }
+
+    function closeRatingModal() {
+        if (!ratingModal) return;
+        ratingModal.classList.remove('is-open');
+        ratingModal.setAttribute('aria-hidden', 'true');
+        ratingModal.removeAttribute('data-cocktail-id');
+        document.body.style.overflow = '';
+    }
+
+    function openRatingModal(cocktailId, cocktailName) {
+        if (!ratingModal || !cocktailId) return;
+        closeRecipeModal();
+        ratingModal.setAttribute('data-cocktail-id', String(cocktailId));
+        if (ratingModalTitle) {
+            ratingModalTitle.textContent = cocktailName || 'Ratings';
+        }
+        if (ratingModalSummary) {
+            ratingModalSummary.textContent = 'Loading ratings…';
+        }
+        if (ratingModalHint) {
+            ratingModalHint.textContent = '';
+        }
+        renderRatingList([]);
+        if (ratingModalList) {
+            ratingModalList.innerHTML = '<p class="muted rating-list__empty">Loading…</p>';
+        }
+        ratingModal.classList.add('is-open');
+        ratingModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        refreshRatingModal(cocktailId).catch(function () {
+            if (ratingModalSummary) {
+                ratingModalSummary.textContent = 'Could not load ratings.';
             }
         });
     }
 
     function openRecipeModal(data) {
         if (!modal) return;
+        closeRatingModal();
         modalTitle.textContent = data.name || 'Recipe';
         modalImage.src = data.image || '';
         modalImage.alt = data.name || '';
@@ -115,13 +224,36 @@
                 closeRecipeModal();
             }
         });
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && modal.classList.contains('is-open')) closeRecipeModal();
+    }
+
+    if (ratingModal) {
+        ratingModal.addEventListener('click', function (e) {
+            if (e.target === ratingModal || e.target.closest('[data-modal-close]')) {
+                closeRatingModal();
+            }
         });
     }
 
+    document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape') return;
+        if (ratingModal && ratingModal.classList.contains('is-open')) {
+            closeRatingModal();
+        } else if (modal && modal.classList.contains('is-open')) {
+            closeRecipeModal();
+        }
+    });
+
     // Recipe buttons (including rows added by live search)
     document.addEventListener('click', function (e) {
+        const ratingTrigger = e.target.closest('[data-rating-trigger]');
+        if (ratingTrigger) {
+            openRatingModal(
+                ratingTrigger.getAttribute('data-rating-trigger'),
+                ratingTrigger.getAttribute('data-cocktail-name')
+            );
+            return;
+        }
+
         const starBtn = e.target.closest('.star-rating__star');
         if (starBtn) {
             const ratingInput = starBtn.closest('[data-rating-input]');
@@ -266,28 +398,26 @@
         countEl.textContent = cocktail.number_of_ingredients + ' ingredients';
         nameCell.appendChild(nameEl);
 
+        const ratingRow = document.createElement('div');
+        ratingRow.className = 'cocktail-rating-row';
+
+        const ratingTrigger = document.createElement('button');
+        ratingTrigger.type = 'button';
+        ratingTrigger.className = 'rating-trigger';
+        ratingTrigger.setAttribute('data-rating-trigger', String(cocktail.id));
+        ratingTrigger.setAttribute('data-cocktail-name', cocktail.name);
+        ratingTrigger.textContent = '★';
+        setRatingTriggerState(ratingTrigger, cocktail.user_stars);
+
         const ratingSummary = document.createElement('div');
         ratingSummary.className = 'cocktail-rating-summary muted';
         ratingSummary.setAttribute('data-rating-summary', String(cocktail.id));
         ratingSummary.style.fontSize = 'var(--fs-xs)';
         ratingSummary.textContent = formatRatingSummary(cocktail.avg_rating, cocktail.rating_count || 0);
-        nameCell.appendChild(ratingSummary);
 
-        const ratingInput = document.createElement('div');
-        ratingInput.className = 'star-rating star-rating--compact';
-        ratingInput.setAttribute('data-rating-input', String(cocktail.id));
-        ratingInput.setAttribute('aria-label', 'Rate ' + cocktail.name);
-        for (var star = 1; star <= 5; star++) {
-            const starBtn = document.createElement('button');
-            starBtn.type = 'button';
-            starBtn.className = 'star-rating__star';
-            starBtn.setAttribute('data-star', String(star));
-            starBtn.setAttribute('aria-label', star + (star === 1 ? ' star' : ' stars'));
-            starBtn.textContent = '★';
-            ratingInput.appendChild(starBtn);
-        }
-        setStarRatingState(ratingInput, cocktail.user_stars);
-        nameCell.appendChild(ratingInput);
+        ratingRow.appendChild(ratingTrigger);
+        ratingRow.appendChild(ratingSummary);
+        nameCell.appendChild(ratingRow);
 
         nameCell.appendChild(countEl);
 
@@ -408,7 +538,10 @@
     bindSearchInput(ingredientInput);
     if (alcoholSelect) alcoholSelect.addEventListener('change', refreshSearch);
 
-    document.querySelectorAll('[data-rating-input]').forEach(function (el) {
+    document.querySelectorAll('[data-rating-trigger]').forEach(function (el) {
+        setRatingTriggerState(el, el.getAttribute('data-user-stars'));
+    });
+    document.querySelectorAll('#recipeModalStarRating, #ratingModalStarPicker').forEach(function (el) {
         setStarRatingState(el, el.getAttribute('data-user-stars'));
     });
 })();

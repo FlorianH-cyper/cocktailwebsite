@@ -83,6 +83,39 @@
         </main>
     </div>
 
+    <!-- Rating Modal -->
+    <div class="modal-backdrop" id="ratingModal" role="dialog" aria-modal="true" aria-labelledby="ratingModalTitle"
+        aria-hidden="true">
+        <div class="modal modal--narrow">
+            <div class="modal__header">
+                <h3 class="modal__title" id="ratingModalTitle">Ratings</h3>
+                <button type="button" class="modal__close" data-modal-close aria-label="Close">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M18 6L6 18M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal__body modal__body--stacked">
+                <div class="modal__rating">
+                    <div class="modal__rating-summary muted" id="ratingModalSummary"></div>
+                    <div class="star-rating" id="ratingModalStarPicker" data-rating-input="" aria-label="Your rating">
+                        <button type="button" class="star-rating__star" data-star="1" aria-label="1 star">★</button>
+                        <button type="button" class="star-rating__star" data-star="2" aria-label="2 stars">★</button>
+                        <button type="button" class="star-rating__star" data-star="3" aria-label="3 stars">★</button>
+                        <button type="button" class="star-rating__star" data-star="4" aria-label="4 stars">★</button>
+                        <button type="button" class="star-rating__star" data-star="5" aria-label="5 stars">★</button>
+                    </div>
+                    <p class="muted" id="ratingModalHint" style="margin: 0; font-size: var(--fs-sm);"></p>
+                </div>
+                <div>
+                    <h4 class="rating-modal__heading">All ratings</h4>
+                    <div id="ratingModalList" class="rating-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Shared Recipe Modal -->
     <div class="modal-backdrop" id="recipeModal" role="dialog" aria-modal="true" aria-labelledby="recipeModalTitle"
         aria-hidden="true">
