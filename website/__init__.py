@@ -1,17 +1,21 @@
+import os
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from os import path
 from flask_login import LoginManager
 
 # database
 db = SQLAlchemy()
-DB_NAME="database.db"
+DEFAULT_DB_PATH = "instance/database.db"
 
 # creates flask application
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'my random secret key'
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-only-fallback')
+    # DATABASE_PATH lets production point at a persistent volume (e.g. /data/database.db)
+    db_path = os.path.abspath(os.environ.get('DATABASE_PATH', DEFAULT_DB_PATH))
+    os.makedirs(os.path.dirname(db_path), exist_ok=True)
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
     db.init_app(app) # initializes database with app
 
     from .views import views
