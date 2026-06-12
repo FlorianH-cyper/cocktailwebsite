@@ -1,3 +1,6 @@
+import re
+from fractions import Fraction
+
 from ..models import Cocktail, Rating, User
 from .. import db
 from sqlalchemy import func
@@ -13,16 +16,56 @@ def get_cocktail_ingredients_and_measures(cocktail):
     return data
 
 
+# Matches a leading quantity ("1", "0.5", "1/2", "1 1/2") followed by a unit ("oz", "cl", ...).
+_MEASURE_RE = re.compile(r'^\s*(\d+\s+\d+/\d+|\d+/\d+|\d*\.\d+|\d+)\s*(.*?)\s*$')
+
+
+def _parse_measure(measure):
+    """Split a measure like '1 1/2 oz' into (Fraction(3, 2), 'oz'), or None if unparseable."""
+    if not measure:
+        return None
+    match = _MEASURE_RE.match(str(measure))
+    if not match:
+        return None
+    number, unit = match.groups()
+    parts = number.split()
+    quantity = sum(Fraction(part) for part in parts)
+    return quantity, unit
+
+
+def _format_quantity(quantity):
+    whole, remainder = divmod(quantity.numerator, quantity.denominator)
+    if remainder == 0:
+        return str(whole)
+    if whole == 0:
+        return f"{remainder}/{quantity.denominator}"
+    return f"{whole} {remainder}/{quantity.denominator}"
+
+
 def aggregate_shopping_list(shopping_list, menuitems):
+    amount_by_menuitem = {menuitem.id: menuitem.amount for menuitem in menuitems}
+
+    items_by_ingredient = {}
     for item in shopping_list:
-        respective_menu_item = next(menuitem for menuitem in menuitems if menuitem.id == item.menuitem_id)
-        item.measure = str(respective_menu_item.amount) + " * " +  str(item.measure) 
+        items_by_ingredient.setdefault(item.ingredient, []).append(item)
+
     aggregated_shopping_list = {}
-    for item in shopping_list:
-        if item.ingredient in aggregated_shopping_list:
-            aggregated_shopping_list[item.ingredient] = str(aggregated_shopping_list[item.ingredient]) + " + " + str(item.measure) 
+    for ingredient, items in items_by_ingredient.items():
+        parsed = [_parse_measure(item.measure) for item in items]
+        all_parseable = all(parsed)
+        units = {unit.lower() for _, unit in parsed} if all_parseable else set()
+        if all_parseable and len(units) == 1:
+            total = sum(
+                quantity * amount_by_menuitem[item.menuitem_id]
+                for (quantity, _), item in zip(parsed, items)
+            )
+            display_unit = parsed[0][1]
+            aggregated_shopping_list[ingredient] = f"{_format_quantity(total)} {display_unit}".strip()
         else:
-            aggregated_shopping_list[item.ingredient] = str(item.measure)
+            aggregated_shopping_list[ingredient] = " + ".join(
+                f"{amount_by_menuitem[item.menuitem_id]} * {item.measure}"
+                for item in items
+            )
     return aggregated_shopping_list
 
 
