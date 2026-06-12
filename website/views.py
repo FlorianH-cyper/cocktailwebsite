@@ -4,7 +4,13 @@ from .models import Party, Cocktail, Menuitem, Shoppinglistitem
 from website import db
 import json
 from website import db
-from website.utils import get_cocktail_ingredients_and_measures, aggregate_shopping_list
+from website.utils import (
+    get_cocktail_ingredients_and_measures,
+    aggregate_shopping_list,
+    search_cocktails,
+    cocktail_to_search_dict,
+    cocktail_thumb_url,
+)
 views = Blueprint('views', __name__) # set up view blueprint for flask app
 
 
@@ -34,39 +40,38 @@ def parties():
     return render_template("parties.html", user=current_user)
 
 
-COCKTAIL_SEARCH_LIMIT = 50
 
 
 @views.route('/cocktailsearch', methods=['GET']) 
 @login_required
 def cocktailsearch():
-    query = Cocktail.query
-    
-    by_name_search_string = request.args.get('cocktailName')
-    by_ingredient_search_string = request.args.get('ingredient')
-    alcoholic_filter = request.args.get('alcoholic')
-
-    if(by_name_search_string):
-        query = query.filter(Cocktail.name.contains(by_name_search_string))
-    if by_ingredient_search_string:
-        query = query.filter(Cocktail.all_ingredients.contains(by_ingredient_search_string))
-    if alcoholic_filter:
-        if(alcoholic_filter == "alcoholic"):
-            query = query.filter(Cocktail.alcoholic == True)
-        elif(alcoholic_filter == "non-alcoholic"):
-            query = query.filter(Cocktail.alcoholic == False)
-
-    search_results = query.order_by(Cocktail.name).limit(COCKTAIL_SEARCH_LIMIT + 1).all()
-    results_truncated = len(search_results) > COCKTAIL_SEARCH_LIMIT
-    if results_truncated:
-        search_results = search_results[:COCKTAIL_SEARCH_LIMIT]
+    search_results, results_truncated = search_cocktails(
+        name=request.args.get('cocktailName'),
+        ingredient=request.args.get('ingredient'),
+        alcoholic=request.args.get('alcoholic'),
+    )
 
     return render_template(
         "cocktailsearch.html",
         cocktails=search_results,
         results_truncated=results_truncated,
+        cocktail_thumb_url=cocktail_thumb_url,
         user=current_user,
     )
+
+
+@views.route('/api/cocktails', methods=['GET'])
+@login_required
+def api_cocktails():
+    cocktails, truncated = search_cocktails(
+        name=request.args.get('cocktailName'),
+        ingredient=request.args.get('ingredient'),
+        alcoholic=request.args.get('alcoholic'),
+    )
+    return jsonify({
+        "cocktails": [cocktail_to_search_dict(c) for c in cocktails],
+        "truncated": truncated,
+    })
 
 
 

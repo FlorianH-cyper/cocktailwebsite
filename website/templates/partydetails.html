@@ -49,7 +49,7 @@
                     {% for menuitem in party.menu_items %}
                     <tr>
                         <td class="cell--shrink">
-                            <img class="cocktail-thumb" src="{{ menuitem.cocktail.image }}"
+                            <img class="cocktail-thumb" src="/static/images/cocktails/thumbs/{{ menuitem.cocktail.id }}.jpg"
                                 alt="{{ menuitem.cocktail.name }}" loading="lazy" decoding="async" />
                         </td>
                         <td>
