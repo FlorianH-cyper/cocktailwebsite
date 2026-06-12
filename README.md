@@ -1,8 +1,8 @@
 # Mixly
 
-Plan a party, pick the drinks, get the shopping list.
+Plan a cocktail party, pick the drinks, get the shopping list.
 
-Mixly is a web app for party planning: create a party with a number of guests, browse a catalog of **633 cocktails**, build your drink menu — and Mixly aggregates everything into a single shopping list so you know exactly what to buy.
+Mixly is a web app for cocktail party planning: create a party with a number of guests, browse a catalog of **633 cocktails**, build your drink menu — and Mixly aggregates everything into a single shopping list so you know exactly what to buy.
 
 ## Features
 
