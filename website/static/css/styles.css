@@ -1032,6 +1032,52 @@ a:hover {
   color: var(--text-base);
 }
 
+.modal__rating {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.modal__rating-summary {
+  font-size: var(--fs-sm);
+}
+
+.star-rating {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.star-rating--compact {
+  margin-top: var(--space-1);
+  margin-bottom: var(--space-1);
+}
+
+.star-rating__star {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  line-height: 1;
+  font-size: 1.1rem;
+  color: var(--border-strong);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+
+.star-rating--compact .star-rating__star {
+  font-size: 0.95rem;
+}
+
+.star-rating__star:hover,
+.star-rating__star.is-active {
+  color: var(--warning-500);
+}
+
+.star-rating__star:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;

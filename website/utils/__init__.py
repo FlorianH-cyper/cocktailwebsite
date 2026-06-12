@@ -1,4 +1,6 @@
-from ..models import Cocktail
+from ..models import Cocktail, Rating
+from .. import db
+from sqlalchemy import func
 
 
 def get_cocktail_ingredients_and_measures(cocktail):
@@ -50,8 +52,8 @@ def search_cocktails(name=None, ingredient=None, alcoholic=None):
     return results, truncated
 
 
-def cocktail_to_search_dict(cocktail):
-    return {
+def cocktail_to_search_dict(cocktail, rating=None):
+    data = {
         "id": cocktail.id,
         "name": cocktail.name,
         "thumb": cocktail_thumb_url(cocktail.id),
@@ -60,3 +62,50 @@ def cocktail_to_search_dict(cocktail):
         "number_of_ingredients": cocktail.number_of_ingredients,
         "all_ingredients": cocktail.all_ingredients or "",
     }
+    if rating is not None:
+        data["avg_rating"] = rating["avg"]
+        data["rating_count"] = rating["count"]
+        data["user_stars"] = rating["user_stars"]
+    return data
+
+
+def get_ratings_for_cocktails(cocktail_ids, user_id=None):
+    if not cocktail_ids:
+        return {}
+
+    result = {
+        cocktail_id: {"avg": None, "count": 0, "user_stars": None}
+        for cocktail_id in cocktail_ids
+    }
+
+    stats = (
+        db.session.query(
+            Rating.cocktail_id,
+            func.avg(Rating.stars).label("avg"),
+            func.count(Rating.id).label("count"),
+        )
+        .filter(Rating.cocktail_id.in_(cocktail_ids))
+        .group_by(Rating.cocktail_id)
+        .all()
+    )
+    for row in stats:
+        result[row.cocktail_id] = {
+            "avg": round(float(row.avg), 1),
+            "count": row.count,
+            "user_stars": None,
+        }
+
+    if user_id:
+        user_ratings = Rating.query.filter(
+            Rating.user_id == user_id,
+            Rating.cocktail_id.in_(cocktail_ids),
+        ).all()
+        for rating in user_ratings:
+            result[rating.cocktail_id]["user_stars"] = rating.stars
+
+    return result
+
+
+def get_cocktail_rating_summary(cocktail_id, user_id=None):
+    ratings = get_ratings_for_cocktails([cocktail_id], user_id=user_id)
+    return ratings.get(cocktail_id, {"avg": None, "count": 0, "user_stars": None})

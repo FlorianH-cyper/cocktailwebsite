@@ -4,6 +4,7 @@ from . import db # imports db from __init__.py
 from flask_login import UserMixin # custom class which we can inherit
 from sqlalchemy.sql import func
 from sqlalchemy.ext.hybrid import hybrid_property
+from werkzeug.security import check_password_hash, generate_password_hash
 
 class Party(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -30,9 +31,26 @@ class Party(db.Model):
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(100))
+    password = db.Column(db.String(256))
     first_name = db.Column(db.String(100))
     parties = db.relationship('Party') # relationship references the name of the class
+    ratings = db.relationship('Rating', backref='user')
+
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+
+    def check_password(self, password):
+        if not self.password:
+            return False
+        if self.password.startswith(('pbkdf2:', 'scrypt:')):
+            return check_password_hash(self.password, password)
+        return self.password == password
+
+    def upgrade_password_if_legacy(self, password):
+        if not self.password or not self.password.startswith(('pbkdf2:', 'scrypt:')):
+            self.set_password(password)
+            return True
+        return False
 
 class Menuitem(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -82,7 +100,18 @@ class Cocktail(db.Model):
     measure_14 = db.Column(db.String(100))
     measure_15 = db.Column(db.String(100))
     menu_items = db.relationship('Menuitem', backref='cocktail', lazy=True)
+    ratings = db.relationship('Rating', backref='cocktail', cascade='all, delete-orphan')
 
+
+class Rating(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    cocktail_id = db.Column(db.Integer, db.ForeignKey('cocktail.id'), nullable=False)
+    stars = db.Column(db.Integer, nullable=False)
+    __table_args__ = (
+        db.UniqueConstraint('user_id', 'cocktail_id', name='unique_user_cocktail_rating'),
+        db.CheckConstraint('stars >= 1 AND stars <= 5', name='rating_stars_range'),
+    )
 
 
 class Shoppinglistitem(db.Model):

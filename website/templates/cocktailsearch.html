@@ -74,6 +74,22 @@
                         </td>
                         <td>
                             <div class="cocktail-name">{{ cocktail.name }}</div>
+                            {% set rating = ratings.get(cocktail.id, {}) %}
+                            <div class="cocktail-rating-summary muted" data-rating-summary="{{ cocktail.id }}"
+                                style="font-size: var(--fs-xs);">
+                                {% if rating.count %}
+                                ★ {{ rating.avg }} · {{ rating.count }} rating{{ 's' if rating.count != 1 else '' }}
+                                {% else %}
+                                No ratings yet
+                                {% endif %}
+                            </div>
+                            <div class="star-rating star-rating--compact" data-rating-input="{{ cocktail.id }}"
+                                data-user-stars="{{ rating.user_stars or '' }}" aria-label="Rate {{ cocktail.name }}">
+                                {% for star in range(1, 6) %}
+                                <button type="button" class="star-rating__star" data-star="{{ star }}"
+                                    aria-label="{{ star }} star{{ 's' if star != 1 else '' }}">★</button>
+                                {% endfor %}
+                            </div>
                             <div class="muted" style="font-size: var(--fs-xs);">{{ cocktail.number_of_ingredients }}
                                 ingredients</div>
                         </td>
@@ -85,8 +101,12 @@
                                 <input class="input" id="addCocktailInput-{{ cocktail.id }}" type="number" min="1"
                                     placeholder="# drinks" />
                                 <button type="button" class="btn btn--secondary btn--sm" data-recipe-trigger
+                                    data-recipe-id="{{ cocktail.id }}"
                                     data-recipe-name="{{ cocktail.name }}" data-recipe-image="{{ cocktail.image }}"
-                                    data-recipe-instructions="{{ cocktail.instructions }}">
+                                    data-recipe-instructions="{{ cocktail.instructions }}"
+                                    data-recipe-avg="{{ rating.avg or '' }}"
+                                    data-recipe-count="{{ rating.count or 0 }}"
+                                    data-recipe-user-stars="{{ rating.user_stars or '' }}">
                                     Recipe
                                 </button>
                                 <button type="button" class="btn btn--sm" data-add-cocktail="{{ cocktail.id }}">+

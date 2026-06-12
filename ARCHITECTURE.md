@@ -27,6 +27,7 @@ cocktailWebsite_new/
     ├── models.py               # SQLAlchemy models
     ├── views.py                # Main routes (parties, search, JSON APIs)
     ├── auth.py                 # Login / sign-up / logout
+    ├── rate_limit.py           # In-memory rate limiting for auth endpoints
     ├── seed.py                 # Fills cocktail table on first start
     ├── utils/                  # Shopping list aggregation helpers
     ├── jobs/
@@ -59,22 +60,24 @@ flowchart LR
 ```
 
 - **Pages** (`/`, `/cocktailsearch`, `/partydetails`, `/login`, `/sign-up`) are rendered server-side with Jinja2.
-- **JSON endpoints** (`/add-cocktail-to-party`, `/delete-party`, `/delete-menu-item`) are called from `static/index.js` via `fetch`.
-- **Auth** uses Flask-Login session cookies; all main pages require login.
+- **JSON endpoints** (`/add-cocktail-to-party`, `/delete-party`, `/delete-menu-item`, `/api/cocktails`, `/api/cocktails/<id>/rate`) are called from `static/index.js` via `fetch`.
+- **Auth** uses Flask-Login session cookies; all main pages require login. Passwords are hashed with Werkzeug (`pbkdf2`/`scrypt`); legacy plaintext passwords still work at login and are re-hashed automatically. Login and sign-up POSTs are rate-limited to **5 attempts per IP per 5 minutes** (in-memory, per process).
 
 ## Data Model
 
 ```mermaid
 erDiagram
     USER ||--o{ PARTY : owns
+    USER ||--o{ RATING : gives
     PARTY ||--o{ MENUITEM : contains
     COCKTAIL ||--o{ MENUITEM : "is referenced by"
+    COCKTAIL ||--o{ RATING : receives
     MENUITEM ||--o{ SHOPPINGLISTITEM : generates
 
     USER {
         int id
         string email
-        string password
+        string password_hash
         string first_name
     }
     PARTY {
@@ -94,6 +97,12 @@ erDiagram
         string ingredients_1_to_15
         string measures_1_to_15
     }
+    RATING {
+        int id
+        int user_id
+        int cocktail_id
+        int stars
+    }
     SHOPPINGLISTITEM {
         int id
         string ingredient
@@ -102,7 +111,21 @@ erDiagram
 ```
 
 - `Cocktail` stores up to 15 ingredient/measure pairs as flat columns (mirrors TheCocktailDB API shape).
+- `Rating` stores one 1–5 star vote per user per cocktail (`unique_user_cocktail_rating`); averages are computed in `utils/` and rounded to one decimal.
 - When a cocktail is added to a party, `Shoppinglistitem` rows are created per ingredient; `utils/` aggregates them into the shopping list shown on the party details page.
+
+## Authentication Security
+
+- **Password hashing** — `User.set_password()` uses Werkzeug `generate_password_hash`; `check_password()` verifies hashes and still accepts legacy plaintext rows. On successful login, `upgrade_password_if_legacy()` re-hashes plaintext passwords in place.
+- **Rate limiting** — `rate_limit.py` tracks POST attempts per endpoint and client IP in process memory. The `@rate_limit_auth` decorator on `/login` and `/sign-up` blocks further POSTs after 5 attempts within 5 minutes and shows a flash message. Counters reset on app restart and are not shared across Gunicorn workers.
+
+## Star Ratings
+
+Users can rate cocktails on `/cocktailsearch`:
+
+- **UI** — each search result shows the community average (e.g. `★ 4.2 · 3 ratings`) and clickable 1–5 star buttons; the recipe modal (`base.html`) shows the same summary and stars.
+- **API** — `POST /api/cocktails/<id>/rate` with JSON `{"stars": 1-5}` upserts the current user's rating and returns `{avg, count, user_stars}`. Live search results from `GET /api/cocktails` include the same fields.
+- **Rules** — one rating per user per cocktail; submitting again updates the existing row. Stars must be integers 1–5 (enforced in the model and view).
 
 ## Configuration
 
@@ -154,10 +177,9 @@ $env:FLASK_DEBUG = "1"   # enables auto-reload
 python main.py            # http://127.0.0.1:5000
 ```
 
-The local database lives in `instance/database.db` and is created (and seeded with cocktails) automatically on first start.
+The local database lives in `instance/database.db` and is created (and seeded with cocktails) automatically on first start. New tables and columns are applied via `db.create_all()` on every startup — there is no separate migration step.
 
 ## Known Limitations
 
-- **Passwords are stored in plaintext** — acceptable for a private demo, must be fixed (hashing + rate limiting) before opening to the public.
+- **Auth rate limits are in-memory** — counters reset on restart and are per-process, so limits are weaker under multiple Gunicorn workers.
 - SQLite handles one writer at a time — fine at friends-scale, would need PostgreSQL for serious concurrent traffic.
-- Cocktail images are hotlinked from TheCocktailDB's CDN.

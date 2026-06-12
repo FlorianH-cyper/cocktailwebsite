@@ -2,17 +2,21 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from .models import User
 from website import db
 from flask_login import login_user, login_required, logout_user, current_user
+from .rate_limit import rate_limit_auth
 
 auth = Blueprint('auth', __name__) # set up auth blueprint for flask app
 
 @auth.route('/login', methods=["GET", "POST"])
+@rate_limit_auth('login.html')
 def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
         user = User.query.filter_by(email=email).first()
         if user:
-            if user.password == password:
+            if user.check_password(password):
+                user.upgrade_password_if_legacy(password)
+                db.session.commit()
                 flash('logged in succesfully', category='success')
                 login_user(user, remember=True)
                 return redirect(url_for('views.parties'))
@@ -29,6 +33,7 @@ def logout():
     return redirect(url_for('auth.login'))
 
 @auth.route('/sign-up', methods=["GET", "POST"])
+@rate_limit_auth('sign_up.html')
 def sign_up():
     if request.method == 'POST':
         email = request.form.get('email')
@@ -48,7 +53,8 @@ def sign_up():
         elif len(password1) < 4:
             flash('Password to short', category='error')
         else:
-            new_user = User(email=email, first_name=first_name, password=password1)
+            new_user = User(email=email, first_name=first_name)
+            new_user.set_password(password1)
             db.session.add(new_user)
             db.session.commit()
             flash('Account created', category='success')

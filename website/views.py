@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash,jsonify
 from flask_login import login_required, current_user
-from .models import Party, Cocktail, Menuitem, Shoppinglistitem
+from .models import Party, Cocktail, Menuitem, Shoppinglistitem, Rating
 from website import db
 import json
 from website import db
@@ -10,6 +10,8 @@ from website.utils import (
     search_cocktails,
     cocktail_to_search_dict,
     cocktail_thumb_url,
+    get_ratings_for_cocktails,
+    get_cocktail_rating_summary,
 )
 views = Blueprint('views', __name__) # set up view blueprint for flask app
 
@@ -50,10 +52,15 @@ def cocktailsearch():
         ingredient=request.args.get('ingredient'),
         alcoholic=request.args.get('alcoholic'),
     )
+    ratings = get_ratings_for_cocktails(
+        [cocktail.id for cocktail in search_results],
+        user_id=current_user.id,
+    )
 
     return render_template(
         "cocktailsearch.html",
         cocktails=search_results,
+        ratings=ratings,
         results_truncated=results_truncated,
         cocktail_thumb_url=cocktail_thumb_url,
         user=current_user,
@@ -68,8 +75,15 @@ def api_cocktails():
         ingredient=request.args.get('ingredient'),
         alcoholic=request.args.get('alcoholic'),
     )
+    ratings = get_ratings_for_cocktails(
+        [cocktail.id for cocktail in cocktails],
+        user_id=current_user.id,
+    )
     return jsonify({
-        "cocktails": [cocktail_to_search_dict(c) for c in cocktails],
+        "cocktails": [
+            cocktail_to_search_dict(c, ratings.get(c.id))
+            for c in cocktails
+        ],
         "truncated": truncated,
     })
 
@@ -159,3 +173,41 @@ def add_cocktail_to_party():
     db.session.commit()
             
     return jsonify({}) # returns empty response
+
+
+@views.route('/api/cocktails/<int:cocktail_id>/rate', methods=['POST'])
+@login_required
+def rate_cocktail(cocktail_id):
+    data = json.loads(request.data)
+    stars = data.get('stars')
+    if stars is None:
+        return jsonify({"error": "stars is required"}), 400
+
+    try:
+        stars = int(stars)
+    except (TypeError, ValueError):
+        return jsonify({"error": "stars must be an integer"}), 400
+
+    if stars < 1 or stars > 5:
+        return jsonify({"error": "stars must be between 1 and 5"}), 400
+
+    cocktail = Cocktail.query.get(cocktail_id)
+    if not cocktail:
+        return jsonify({"error": "cocktail not found"}), 404
+
+    rating = Rating.query.filter_by(
+        user_id=current_user.id,
+        cocktail_id=cocktail_id,
+    ).first()
+    if rating:
+        rating.stars = stars
+    else:
+        rating = Rating(
+            user_id=current_user.id,
+            cocktail_id=cocktail_id,
+            stars=stars,
+        )
+        db.session.add(rating)
+
+    db.session.commit()
+    return jsonify(get_cocktail_rating_summary(cocktail_id, current_user.id))
