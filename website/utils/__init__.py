@@ -51,21 +51,26 @@ def aggregate_shopping_list(shopping_list, menuitems):
 
     aggregated_shopping_list = {}
     for ingredient, items in items_by_ingredient.items():
-        parsed = [_parse_measure(item.measure) for item in items]
-        all_parseable = all(parsed)
-        units = {unit.lower() for _, unit in parsed} if all_parseable else set()
-        if all_parseable and len(units) == 1:
-            total = sum(
-                quantity * amount_by_menuitem[item.menuitem_id]
-                for (quantity, _), item in zip(parsed, items)
-            )
-            display_unit = parsed[0][1]
-            aggregated_shopping_list[ingredient] = f"{_format_quantity(total)} {display_unit}".strip()
-        else:
-            aggregated_shopping_list[ingredient] = " + ".join(
-                f"{amount_by_menuitem[item.menuitem_id]} * {item.measure}"
-                for item in items
-            )
+        # One running total per unit (keyed case-insensitively, first spelling kept for display).
+        totals = {}
+        unparseable = []
+        for item in items:
+            amount = amount_by_menuitem[item.menuitem_id]
+            parsed = _parse_measure(item.measure)
+            if parsed is None:
+                unparseable.append(f"{amount} * {item.measure}")
+                continue
+            quantity, unit = parsed
+            key = unit.lower()
+            if key in totals:
+                totals[key][0] += quantity * amount
+            else:
+                totals[key] = [quantity * amount, unit]
+        terms = [
+            f"{_format_quantity(total)} {unit}".strip()
+            for total, unit in totals.values()
+        ]
+        aggregated_shopping_list[ingredient] = " + ".join(terms + unparseable)
     return aggregated_shopping_list
 
 
