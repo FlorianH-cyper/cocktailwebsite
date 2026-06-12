@@ -47,7 +47,11 @@
 
 {% if cocktails %}
 <div class="results-meta">
+    {% if results_truncated %}
+    <span>First {{ cocktails|length }} results — narrow your search for more matches</span>
+    {% else %}
     <span>{{ cocktails|length }} result{{ 's' if cocktails|length != 1 else '' }}</span>
+    {% endif %}
 </div>
 
 <div class="card">
@@ -65,7 +69,8 @@
                 {% for cocktail in cocktails %}
                 <tr>
                     <td class="cell--shrink">
-                        <img class="cocktail-thumb" src="{{ cocktail.image }}" alt="{{ cocktail.name }}" />
+                        <img class="cocktail-thumb" src="{{ cocktail.image }}" alt="{{ cocktail.name }}"
+                            loading="lazy" decoding="async" />
                     </td>
                     <td>
                         <div class="cocktail-name">{{ cocktail.name }}</div>

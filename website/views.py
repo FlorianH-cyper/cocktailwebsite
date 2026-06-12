@@ -34,6 +34,9 @@ def parties():
     return render_template("parties.html", user=current_user)
 
 
+COCKTAIL_SEARCH_LIMIT = 50
+
+
 @views.route('/cocktailsearch', methods=['GET']) 
 @login_required
 def cocktailsearch():
@@ -52,10 +55,18 @@ def cocktailsearch():
             query = query.filter(Cocktail.alcoholic == True)
         elif(alcoholic_filter == "non-alcoholic"):
             query = query.filter(Cocktail.alcoholic == False)
-    
-    search_results = query.all()
 
-    return render_template("cocktailsearch.html", cocktails=search_results, user=current_user)
+    search_results = query.order_by(Cocktail.name).limit(COCKTAIL_SEARCH_LIMIT + 1).all()
+    results_truncated = len(search_results) > COCKTAIL_SEARCH_LIMIT
+    if results_truncated:
+        search_results = search_results[:COCKTAIL_SEARCH_LIMIT]
+
+    return render_template(
+        "cocktailsearch.html",
+        cocktails=search_results,
+        results_truncated=results_truncated,
+        user=current_user,
+    )
 
 
 
