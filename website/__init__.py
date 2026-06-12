@@ -28,6 +28,8 @@ def create_app():
 
     with app.app_context():
         db.create_all() # creates database for the app
+        from .seed import seed_cocktails_if_empty
+        seed_cocktails_if_empty() # fills cocktail table on a fresh database
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
