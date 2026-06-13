@@ -91,7 +91,7 @@
         <div class="card__header">
             <div>
                 <h2 class="card__title">Shopping list</h2>
-                <p class="card__subtitle">All ingredients combined</p>
+                <p class="card__subtitle">Ingredients to buy · on-hand items are subtracted</p>
             </div>
         </div>
         <div class="table-wrap">
@@ -110,8 +110,13 @@
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="2" class="muted text-center" style="padding: var(--space-6);">Add cocktails to see
-                            your shopping list.</td>
+                        <td colspan="2" class="muted text-center" style="padding: var(--space-6);">
+                            {% if party.menu_items %}
+                            Nothing left to buy — your inventory covers everything, or add cocktails to see items here.
+                            {% else %}
+                            Add cocktails to see your shopping list.
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -119,5 +124,7 @@
         </div>
     </div>
 </div>
+
+{% include '_inventory_section.html' %}
 
 {% endblock %}

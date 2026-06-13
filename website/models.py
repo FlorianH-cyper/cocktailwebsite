@@ -35,6 +35,7 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(100))
     parties = db.relationship('Party') # relationship references the name of the class
     ratings = db.relationship('Rating', backref='user')
+    inventory_items = db.relationship('Inventoryitem', cascade="all, delete-orphan")
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
@@ -143,5 +144,12 @@ class Shoppinglistitem(db.Model):
 class Ingredient(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(100))
+
+
+class Inventoryitem(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    ingredient = db.Column(db.String(100))
+    measure = db.Column(db.String(100))
 
 

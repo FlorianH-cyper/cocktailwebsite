@@ -1,0 +1,68 @@
+<div class="split mt-4">
+    <div class="card">
+        <div class="card__header">
+            <div>
+                <h2 class="card__title">My inventory</h2>
+                <p class="card__subtitle">{{ inventory_items|length }} item{{ 's' if inventory_items|length != 1 else '' }} on hand · subtracted from shopping lists</p>
+            </div>
+        </div>
+        <div class="table-wrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Ingredient</th>
+                        <th class="cell--right">Amount</th>
+                        <th class="cell--right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in inventory_items %}
+                    <tr>
+                        <td>{{ item.ingredient }}</td>
+                        <td class="cell--right">{{ item.measure }}</td>
+                        <td class="cell--right">
+                            <button type="button" class="btn btn--outline-danger btn--sm"
+                                data-delete-inventory-item="{{ item.id }}">
+                                Remove
+                            </button>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="3" class="muted text-center" style="padding: var(--space-6);">
+                            Nothing in your inventory yet. Add items you already have at home.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card__header">
+            <div>
+                <h2 class="card__title">Add to inventory</h2>
+                <p class="card__subtitle">Use the same ingredient names and units as in cocktail recipes (e.g. 2 cl, 1 oz).</p>
+            </div>
+        </div>
+        <div class="card__body">
+            <form method="POST" action="{{ url_for('views.add_inventory_item') }}" class="form-stack">
+                <input type="hidden" name="return_to" value="{{ inventory_return_to }}" />
+                <div class="form-grid">
+                    <div class="field col-6">
+                        <label class="field__label" for="inventory_ingredient">Ingredient</label>
+                        <input class="input" type="text" id="inventory_ingredient" name="ingredient" placeholder="Vodka" required />
+                    </div>
+                    <div class="field col-6">
+                        <label class="field__label" for="inventory_measure">Amount</label>
+                        <input class="input" type="text" id="inventory_measure" name="measure" placeholder="70 cl" required />
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn">Add item</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

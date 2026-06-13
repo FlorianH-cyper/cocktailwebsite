@@ -364,6 +364,19 @@
         });
     });
 
+    document.querySelectorAll('[data-delete-inventory-item]').forEach(function (el) {
+        el.addEventListener('click', function () {
+            const inventoryItemId = el.getAttribute('data-delete-inventory-item');
+            if (!confirm('Remove this item from your inventory?')) return;
+            fetch('/delete-inventory-item', {
+                method: 'DELETE',
+                body: JSON.stringify({ inventoryItemId: Number(inventoryItemId) })
+            }).then(function () {
+                window.location.reload();
+            });
+        });
+    });
+
     document.querySelectorAll('[data-toggle-recipe]').forEach(function (el) {
         el.addEventListener('click', function () {
             const targetId = el.getAttribute('data-toggle-recipe');

@@ -42,8 +42,52 @@ def _format_quantity(quantity):
     return f"{whole} {remainder}/{quantity.denominator}"
 
 
-def aggregate_shopping_list(shopping_list, menuitems):
+def _format_ingredient_measure(totals, unparseable):
+    terms = [
+        f"{_format_quantity(total)} {unit}".strip()
+        for total, unit in totals.values()
+    ]
+    if not terms and not unparseable:
+        return None
+    return " + ".join(terms + unparseable)
+
+
+def _inventory_totals_by_ingredient(inventory):
+    totals_by_ingredient = {}
+    for item in inventory or []:
+        parsed = _parse_measure(item.measure)
+        if parsed is None:
+            continue
+        quantity, unit = parsed
+        ingredient_key = item.ingredient.lower()
+        unit_key = unit.lower()
+        ingredient_totals = totals_by_ingredient.setdefault(ingredient_key, {})
+        if unit_key in ingredient_totals:
+            ingredient_totals[unit_key][0] += quantity
+        else:
+            ingredient_totals[unit_key] = [quantity, unit]
+    return totals_by_ingredient
+
+
+def _subtract_inventory(totals, unparseable, inventory_for_ingredient):
+    if not inventory_for_ingredient:
+        return totals, unparseable
+
+    for unit_key, (on_hand, _unit) in inventory_for_ingredient.items():
+        if unit_key not in totals:
+            continue
+        total, display_unit = totals[unit_key]
+        remaining = total - on_hand
+        if remaining <= 0:
+            del totals[unit_key]
+        else:
+            totals[unit_key] = [remaining, display_unit]
+    return totals, unparseable
+
+
+def aggregate_shopping_list(shopping_list, menuitems, inventory=None):
     amount_by_menuitem = {menuitem.id: menuitem.amount for menuitem in menuitems}
+    inventory_by_ingredient = _inventory_totals_by_ingredient(inventory)
 
     items_by_ingredient = {}
     for item in shopping_list:
@@ -51,7 +95,6 @@ def aggregate_shopping_list(shopping_list, menuitems):
 
     aggregated_shopping_list = {}
     for ingredient, items in items_by_ingredient.items():
-        # One running total per unit (keyed case-insensitively, first spelling kept for display).
         totals = {}
         unparseable = []
         for item in items:
@@ -66,11 +109,15 @@ def aggregate_shopping_list(shopping_list, menuitems):
                 totals[key][0] += quantity * amount
             else:
                 totals[key] = [quantity * amount, unit]
-        terms = [
-            f"{_format_quantity(total)} {unit}".strip()
-            for total, unit in totals.values()
-        ]
-        aggregated_shopping_list[ingredient] = " + ".join(terms + unparseable)
+
+        totals, unparseable = _subtract_inventory(
+            totals,
+            unparseable,
+            inventory_by_ingredient.get(ingredient.lower()),
+        )
+        formatted = _format_ingredient_measure(totals, unparseable)
+        if formatted:
+            aggregated_shopping_list[ingredient] = formatted
     return aggregated_shopping_list
 
 

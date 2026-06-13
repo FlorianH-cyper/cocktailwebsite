@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template, request, flash,jsonify
+from flask import Blueprint, render_template, request, flash, jsonify, redirect
 from flask_login import login_required, current_user
-from .models import Party, Cocktail, Menuitem, Shoppinglistitem, Rating
+from .models import Party, Cocktail, Menuitem, Shoppinglistitem, Rating, Inventoryitem
 from website import db
 import json
 from website import db
@@ -15,6 +15,14 @@ from website.utils import (
     get_cocktail_ratings_detail,
 )
 views = Blueprint('views', __name__) # set up view blueprint for flask app
+
+
+def _get_user_inventory():
+    return (
+        Inventoryitem.query.filter_by(user_id=current_user.id)
+        .order_by(Inventoryitem.ingredient)
+        .all()
+    )
 
 
 
@@ -40,7 +48,12 @@ def parties():
             db.session.commit()
             flash("party added", category='success')
 
-    return render_template("parties.html", user=current_user)
+    return render_template(
+        "parties.html",
+        user=current_user,
+        inventory_items=_get_user_inventory(),
+        inventory_return_to='/',
+    )
 
 
 
@@ -126,8 +139,54 @@ def partydetails():
     party = Party.query.get(party_id)
     menuitems = Menuitem.query.filter_by(party_id=party_id).all()
     listitems = Shoppinglistitem.query.filter(Shoppinglistitem.menuitem_id.in_([menuitem.id for menuitem in menuitems])).all()
-    aggregated_shopping_list = aggregate_shopping_list(listitems, menuitems)
-    return render_template("partydetails.html", party=party, shopping_list_view=aggregated_shopping_list, user=current_user)
+    inventory = _get_user_inventory()
+    aggregated_shopping_list = aggregate_shopping_list(listitems, menuitems, inventory)
+    return render_template(
+        "partydetails.html",
+        party=party,
+        shopping_list_view=aggregated_shopping_list,
+        inventory_items=inventory,
+        inventory_return_to=f'/partydetails?partyId={party_id}',
+        user=current_user,
+    )
+
+
+@views.route('/add-inventory-item', methods=['POST'])
+@login_required
+def add_inventory_item():
+    ingredient = request.form.get('ingredient', '').strip()
+    measure = request.form.get('measure', '').strip()
+    return_to = request.form.get('return_to', '/')
+    if not return_to.startswith('/') or return_to.startswith('//'):
+        return_to = '/'
+
+    if not ingredient or not measure:
+        flash('Please enter both ingredient and amount.', category='error')
+    else:
+        db.session.add(Inventoryitem(
+            user_id=current_user.id,
+            ingredient=ingredient,
+            measure=measure,
+        ))
+        db.session.commit()
+        flash('Added to your inventory.', category='success')
+
+    return redirect(return_to)
+
+
+@views.route('/delete-inventory-item', methods=['DELETE'])
+@login_required
+def delete_inventory_item():
+    data = json.loads(request.data)
+    item_id = data.get('inventoryItemId')
+    item = Inventoryitem.query.get(item_id)
+    if item and item.user_id == current_user.id:
+        db.session.delete(item)
+        db.session.commit()
+        flash('Removed from inventory.', category='success')
+    else:
+        flash('Could not remove item.', category='error')
+    return jsonify({})
 
 
 
