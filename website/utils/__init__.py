@@ -85,20 +85,53 @@ def _format_ingredient_measure(totals, unparseable):
     return " + ".join(terms + unparseable)
 
 
+def _parse_combined_measure(measure):
+    totals = {}
+    unparseable = []
+    if not measure:
+        return totals, unparseable
+    for part in str(measure).split(' + '):
+        part = part.strip()
+        if not part:
+            continue
+        parsed = _parse_measure(part)
+        if parsed is None:
+            unparseable.append(part)
+            continue
+        quantity, unit = parsed
+        unit_key = unit.lower()
+        if unit_key in totals:
+            totals[unit_key][0] += quantity
+        else:
+            totals[unit_key] = [quantity, unit]
+    return totals, unparseable
+
+
+def merge_inventory_measures(existing_measure, new_measure):
+    totals, unparseable = _parse_combined_measure(existing_measure)
+    new_totals, new_unparseable = _parse_combined_measure(new_measure)
+    for unit_key, (quantity, unit) in new_totals.items():
+        if unit_key in totals:
+            totals[unit_key][0] += quantity
+        else:
+            totals[unit_key] = [quantity, unit]
+    unparseable.extend(new_unparseable)
+    return _format_ingredient_measure(totals, unparseable) or new_measure or existing_measure
+
+
 def _inventory_totals_by_ingredient(inventory):
     totals_by_ingredient = {}
     for item in inventory or []:
-        parsed = _parse_measure(item.measure)
-        if parsed is None:
+        parsed_totals, _unparseable = _parse_combined_measure(item.measure)
+        if not parsed_totals:
             continue
-        quantity, unit = parsed
         ingredient_key = item.ingredient.lower()
-        unit_key = unit.lower()
         ingredient_totals = totals_by_ingredient.setdefault(ingredient_key, {})
-        if unit_key in ingredient_totals:
-            ingredient_totals[unit_key][0] += quantity
-        else:
-            ingredient_totals[unit_key] = [quantity, unit]
+        for unit_key, (quantity, unit) in parsed_totals.items():
+            if unit_key in ingredient_totals:
+                ingredient_totals[unit_key][0] += quantity
+            else:
+                ingredient_totals[unit_key] = [quantity, unit]
     return totals_by_ingredient
 
 

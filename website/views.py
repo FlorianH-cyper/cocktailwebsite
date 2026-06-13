@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, flash, jsonify, redirect
 from flask_login import login_required, current_user
+from sqlalchemy import func
 from .models import Party, Cocktail, Menuitem, Shoppinglistitem, Rating, Inventoryitem
 from website import db
 import json
@@ -15,6 +16,7 @@ from website.utils import (
     get_cocktail_ratings_detail,
     resolve_known_ingredient,
     get_known_ingredient_names,
+    merge_inventory_measures,
 )
 views = Blueprint('views', __name__) # set up view blueprint for flask app
 
@@ -23,6 +25,17 @@ def _get_user_inventory():
     return (
         Inventoryitem.query.filter_by(user_id=current_user.id)
         .order_by(Inventoryitem.ingredient)
+        .all()
+    )
+
+
+def _get_inventory_items_for_ingredient(user_id, ingredient):
+    return (
+        Inventoryitem.query.filter(
+            Inventoryitem.user_id == user_id,
+            func.lower(Inventoryitem.ingredient) == ingredient.lower(),
+        )
+        .order_by(Inventoryitem.id)
         .all()
     )
 
@@ -174,13 +187,26 @@ def add_inventory_item():
                 category='error',
             )
         else:
-            db.session.add(Inventoryitem(
-                user_id=current_user.id,
-                ingredient=canonical_ingredient,
-                measure=measure,
-            ))
+            existing_items = _get_inventory_items_for_ingredient(
+                current_user.id,
+                canonical_ingredient,
+            )
+            if existing_items:
+                merged_measure = existing_items[0].measure
+                for item in existing_items[1:]:
+                    merged_measure = merge_inventory_measures(merged_measure, item.measure)
+                    db.session.delete(item)
+                existing_items[0].ingredient = canonical_ingredient
+                existing_items[0].measure = merge_inventory_measures(merged_measure, measure)
+                flash('Updated amount in your inventory.', category='success')
+            else:
+                db.session.add(Inventoryitem(
+                    user_id=current_user.id,
+                    ingredient=canonical_ingredient,
+                    measure=measure,
+                ))
+                flash('Added to your inventory.', category='success')
             db.session.commit()
-            flash('Added to your inventory.', category='success')
 
     return redirect(return_to)
 
