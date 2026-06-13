@@ -24,6 +24,46 @@
         });
     }
 
+    // ---------- User Menu ----------
+    const userMenu = document.getElementById('userMenu');
+    const userMenuTrigger = document.getElementById('userMenuTrigger');
+    const userMenuDropdown = document.getElementById('userMenuDropdown');
+
+    function closeUserMenu() {
+        if (!userMenuTrigger || !userMenuDropdown) return;
+        userMenuTrigger.setAttribute('aria-expanded', 'false');
+        userMenuDropdown.hidden = true;
+    }
+
+    function openUserMenu() {
+        if (!userMenuTrigger || !userMenuDropdown) return;
+        userMenuTrigger.setAttribute('aria-expanded', 'true');
+        userMenuDropdown.hidden = false;
+    }
+
+    function toggleUserMenu() {
+        if (!userMenuTrigger) return;
+        if (userMenuTrigger.getAttribute('aria-expanded') === 'true') {
+            closeUserMenu();
+        } else {
+            openUserMenu();
+        }
+    }
+
+    if (userMenuTrigger && userMenuDropdown) {
+        userMenuTrigger.addEventListener('click', function (e) {
+            e.stopPropagation();
+            toggleUserMenu();
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!userMenu || userMenuDropdown.hidden) return;
+            if (!userMenu.contains(e.target)) {
+                closeUserMenu();
+            }
+        });
+    }
+
     // ---------- Recipe Modal ----------
     const modal = document.getElementById('recipeModal');
     const modalTitle = document.getElementById('recipeModalTitle');
@@ -218,6 +258,11 @@
 
     document.addEventListener('keydown', function (e) {
         if (e.key !== 'Escape') return;
+        if (userMenuDropdown && !userMenuDropdown.hidden) {
+            closeUserMenu();
+            if (userMenuTrigger) userMenuTrigger.focus();
+            return;
+        }
         if (ratingModal && ratingModal.classList.contains('is-open')) {
             closeRatingModal();
         } else if (modal && modal.classList.contains('is-open')) {

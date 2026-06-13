@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}?v=2" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}?v=3" />
     <script>
         // Apply theme as early as possible to avoid flash of wrong theme.
         (function () {
@@ -59,7 +59,38 @@
                     </svg>
                 </button>
                 {% if user.is_authenticated %}
-                <a class="btn btn--secondary btn--sm" href="/logout">Logout</a>
+                <div class="user-menu" id="userMenu">
+                    <button type="button" class="user-menu__trigger" id="userMenuTrigger"
+                        aria-expanded="false" aria-haspopup="true" aria-controls="userMenuDropdown"
+                        aria-label="Account menu for {{ user.display_name }}">
+                        <span class="user-menu__avatar" aria-hidden="true">{{ user.initials }}</span>
+                        <span class="user-menu__name">{{ user.display_name }}</span>
+                        <svg class="user-menu__chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
+                    </button>
+                    <div class="user-menu__dropdown" id="userMenuDropdown" role="menu" hidden>
+                        <div class="user-menu__header">
+                            <span class="user-menu__avatar user-menu__avatar--lg" aria-hidden="true">{{ user.initials }}</span>
+                            <div class="user-menu__identity">
+                                <span class="user-menu__display-name">{{ user.display_name }}</span>
+                                <span class="user-menu__email">{{ user.email }}</span>
+                            </div>
+                        </div>
+                        <div class="user-menu__divider" role="separator"></div>
+                        <a class="user-menu__item" role="menuitem" href="{{ url_for('auth.logout') }}">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                <polyline points="16 17 21 12 16 7" />
+                                <line x1="21" y1="12" x2="9" y2="12" />
+                            </svg>
+                            Log out
+                        </a>
+                    </div>
+                </div>
                 {% endif %}
             </div>
         </nav>
@@ -136,7 +167,7 @@
         </div>
     </div>
 
-    <script src="{{ url_for('static', filename='index.js') }}?v=2"></script>
+    <script src="{{ url_for('static', filename='index.js') }}?v=3"></script>
 </body>
 
 </html>

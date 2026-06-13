@@ -52,6 +52,25 @@ class User(db.Model, UserMixin):
             return True
         return False
 
+    @property
+    def display_name(self):
+        if self.first_name:
+            return self.first_name
+        if self.email:
+            return self.email.split('@', 1)[0]
+        return 'User'
+
+    @property
+    def initials(self):
+        if self.first_name:
+            parts = self.first_name.strip().split()
+            if len(parts) >= 2:
+                return (parts[0][0] + parts[-1][0]).upper()
+            return parts[0][:2].upper() if len(parts[0]) >= 2 else parts[0][0].upper()
+        if self.email:
+            return self.email[0].upper()
+        return '?'
+
 class Menuitem(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     cocktail_id = db.Column(db.Integer, db.ForeignKey('cocktail.id'), nullable=False)
