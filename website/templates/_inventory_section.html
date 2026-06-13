@@ -11,16 +11,16 @@
                 <thead>
                     <tr>
                         <th>Ingredient</th>
-                        <th class="cell--right">Amount</th>
-                        <th class="cell--right">Actions</th>
+                        <th>Amount</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for item in inventory_items %}
                     <tr>
                         <td>{{ item.ingredient }}</td>
-                        <td class="cell--right">{{ item.measure }}</td>
-                        <td class="cell--right">
+                        <td>{{ item.measure }}</td>
+                        <td>
                             <button type="button" class="btn btn--outline-danger btn--sm"
                                 data-delete-inventory-item="{{ item.id }}">
                                 Remove
