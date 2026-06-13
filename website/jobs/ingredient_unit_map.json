@@ -7,10 +7,6 @@
     "category": "mixer",
     "unit": "cl"
   },
-  "7-up": {
-    "category": "mixer",
-    "unit": "cl"
-  },
   "Absinthe": {
     "category": "spirit",
     "unit": "cl"
@@ -36,10 +32,6 @@
     "unit": "cl"
   },
   "Agave Syrup": {
-    "category": "syrup_sugar",
-    "unit": "cl"
-  },
-  "Agave syrup": {
     "category": "syrup_sugar",
     "unit": "cl"
   },
@@ -70,10 +62,6 @@
   "Angelica root": {
     "category": "spice",
     "unit": "tsp"
-  },
-  "Angostura bitters": {
-    "category": "bitters",
-    "unit": "dash"
   },
   "Angostura Bitters": {
     "category": "bitters",
@@ -107,20 +95,12 @@
     "category": "spirit",
     "unit": "cl"
   },
-  "Apple Brandy": {
-    "category": "spirit",
-    "unit": "cl"
-  },
   "Apple cider": {
     "category": "mixer",
     "unit": "cl"
   },
   "Apple juice": {
     "category": "juice",
-    "unit": "cl"
-  },
-  "Apple schnapps": {
-    "category": "liqueur",
     "unit": "cl"
   },
   "Apple Schnapps": {
@@ -136,10 +116,6 @@
     "unit": "produce"
   },
   "Apricot brandy": {
-    "category": "spirit",
-    "unit": "cl"
-  },
-  "Apricot Brandy": {
     "category": "spirit",
     "unit": "cl"
   },
@@ -172,10 +148,6 @@
     "unit": "produce"
   },
   "Banana liqueur": {
-    "category": "liqueur",
-    "unit": "cl"
-  },
-  "Banana Liqueur": {
     "category": "liqueur",
     "unit": "cl"
   },
@@ -375,10 +347,6 @@
     "category": "dairy",
     "unit": "cl"
   },
-  "chocolate sauce": {
-    "category": "syrup_sugar",
-    "unit": "cl"
-  },
   "Chocolate Sauce": {
     "category": "syrup_sugar",
     "unit": "cl"
@@ -410,10 +378,6 @@
   "Cocoa powder": {
     "category": "spice",
     "unit": "tsp"
-  },
-  "Coconut liqueur": {
-    "category": "liqueur",
-    "unit": "cl"
   },
   "Coconut Liqueur": {
     "category": "liqueur",
@@ -479,10 +443,6 @@
     "category": "juice",
     "unit": "cl"
   },
-  "Cranberry Juice": {
-    "category": "juice",
-    "unit": "cl"
-  },
   "Cranberry vodka": {
     "category": "spirit",
     "unit": "cl"
@@ -496,10 +456,6 @@
     "unit": "cl"
   },
   "Creme de Banane": {
-    "category": "liqueur",
-    "unit": "cl"
-  },
-  "Creme De Banane": {
     "category": "liqueur",
     "unit": "cl"
   },
@@ -543,10 +499,6 @@
     "category": "spirit",
     "unit": "cl"
   },
-  "Dark Rum": {
-    "category": "spirit",
-    "unit": "cl"
-  },
   "demerara Sugar": {
     "category": "syrup_sugar",
     "unit": "tsp"
@@ -575,15 +527,7 @@
     "category": "solid",
     "unit": "piece"
   },
-  "Egg White": {
-    "category": "solid",
-    "unit": "piece"
-  },
   "Egg yolk": {
-    "category": "solid",
-    "unit": "piece"
-  },
-  "Egg Yolk": {
     "category": "solid",
     "unit": "piece"
   },
@@ -659,10 +603,6 @@
     "category": "spirit",
     "unit": "cl"
   },
-  "gin": {
-    "category": "spirit",
-    "unit": "cl"
-  },
   "Ginger": {
     "category": "produce",
     "unit": "produce"
@@ -672,10 +612,6 @@
     "unit": "cl"
   },
   "Ginger Beer": {
-    "category": "mixer",
-    "unit": "cl"
-  },
-  "Ginger beer": {
     "category": "mixer",
     "unit": "cl"
   },
@@ -715,16 +651,8 @@
     "category": "juice",
     "unit": "cl"
   },
-  "Grape soda": {
-    "category": "mixer",
-    "unit": "cl"
-  },
   "Grape Soda": {
     "category": "mixer",
-    "unit": "cl"
-  },
-  "Grapefruit juice": {
-    "category": "juice",
     "unit": "cl"
   },
   "Grapefruit Juice": {
@@ -771,10 +699,6 @@
     "category": "syrup_sugar",
     "unit": "cl"
   },
-  "Hot chocolate": {
-    "category": "dairy",
-    "unit": "cl"
-  },
   "Hot Chocolate": {
     "category": "dairy",
     "unit": "cl"
@@ -804,10 +728,6 @@
     "unit": "cl"
   },
   "Irish whiskey": {
-    "category": "spirit",
-    "unit": "cl"
-  },
-  "Irish Whiskey": {
     "category": "spirit",
     "unit": "cl"
   },
@@ -875,27 +795,11 @@
     "category": "citrus",
     "unit": "fruit"
   },
-  "lemon": {
-    "category": "citrus",
-    "unit": "fruit"
-  },
   "Lemon juice": {
     "category": "juice",
     "unit": "cl"
   },
-  "Lemon Juice": {
-    "category": "juice",
-    "unit": "cl"
-  },
-  "lemon juice": {
-    "category": "juice",
-    "unit": "cl"
-  },
   "Lemon peel": {
-    "category": "garnish",
-    "unit": null
-  },
-  "Lemon Peel": {
     "category": "garnish",
     "unit": null
   },
@@ -923,10 +827,6 @@
     "category": "spirit",
     "unit": "cl"
   },
-  "Light Rum": {
-    "category": "spirit",
-    "unit": "cl"
-  },
   "Lillet": {
     "category": "liqueur",
     "unit": "cl"
@@ -938,10 +838,6 @@
   "Lime": {
     "category": "citrus",
     "unit": "fruit"
-  },
-  "Lime juice": {
-    "category": "juice",
-    "unit": "cl"
   },
   "Lime Juice": {
     "category": "juice",
@@ -967,10 +863,6 @@
     "category": "liqueur",
     "unit": "cl"
   },
-  "Malibu Rum": {
-    "category": "liqueur",
-    "unit": "cl"
-  },
   "Mango": {
     "category": "produce",
     "unit": "produce"
@@ -983,19 +875,7 @@
     "category": "garnish",
     "unit": "piece"
   },
-  "Maraschino Cherry": {
-    "category": "garnish",
-    "unit": "piece"
-  },
   "Maraschino liqueur": {
-    "category": "liqueur",
-    "unit": "cl"
-  },
-  "maraschino liqueur": {
-    "category": "liqueur",
-    "unit": "cl"
-  },
-  "Maraschino Liqueur": {
     "category": "liqueur",
     "unit": "cl"
   },
@@ -1008,10 +888,6 @@
     "unit": "piece"
   },
   "Maui": {
-    "category": "liqueur",
-    "unit": "cl"
-  },
-  "Melon liqueur": {
     "category": "liqueur",
     "unit": "cl"
   },
@@ -1067,10 +943,6 @@
     "category": "bitters",
     "unit": "dash"
   },
-  "Orange Bitters": {
-    "category": "bitters",
-    "unit": "dash"
-  },
   "Orange Curacao": {
     "category": "liqueur",
     "unit": "cl"
@@ -1078,18 +950,6 @@
   "Orange juice": {
     "category": "juice",
     "unit": "cl"
-  },
-  "Orange Juice": {
-    "category": "juice",
-    "unit": "cl"
-  },
-  "orange juice": {
-    "category": "juice",
-    "unit": "cl"
-  },
-  "Orange peel": {
-    "category": "garnish",
-    "unit": null
   },
   "Orange Peel": {
     "category": "garnish",
@@ -1102,10 +962,6 @@
   "Oreo cookie": {
     "category": "solid",
     "unit": "piece"
-  },
-  "Orgeat syrup": {
-    "category": "syrup_sugar",
-    "unit": "cl"
   },
   "Orgeat Syrup": {
     "category": "syrup_sugar",
@@ -1191,14 +1047,6 @@
     "category": "juice",
     "unit": "cl"
   },
-  "Pineapple Juice": {
-    "category": "juice",
-    "unit": "cl"
-  },
-  "pineapple juice": {
-    "category": "juice",
-    "unit": "cl"
-  },
   "Pineapple Syrup": {
     "category": "syrup_sugar",
     "unit": "cl"
@@ -1242,10 +1090,6 @@
   "Raspberry syrup": {
     "category": "syrup_sugar",
     "unit": "tsp"
-  },
-  "Raspberry vodka": {
-    "category": "spirit",
-    "unit": "cl"
   },
   "Raspberry Vodka": {
     "category": "spirit",
@@ -1303,10 +1147,6 @@
     "category": "spirit",
     "unit": "cl"
   },
-  "Rye Whiskey": {
-    "category": "spirit",
-    "unit": "cl"
-  },
   "Salt": {
     "category": "spice",
     "unit": "pinch"
@@ -1345,10 +1185,6 @@
   },
   "Sloe gin": {
     "category": "spirit",
-    "unit": "cl"
-  },
-  "Soda water": {
-    "category": "mixer",
     "unit": "cl"
   },
   "Soda Water": {
@@ -1395,10 +1231,6 @@
     "category": "syrup_sugar",
     "unit": "tsp"
   },
-  "Sugar syrup": {
-    "category": "syrup_sugar",
-    "unit": "cl"
-  },
   "Sugar Syrup": {
     "category": "syrup_sugar",
     "unit": "cl"
@@ -1408,10 +1240,6 @@
     "unit": "cl"
   },
   "Sweet and sour": {
-    "category": "premix",
-    "unit": "cl"
-  },
-  "Sweet and Sour": {
     "category": "premix",
     "unit": "cl"
   },
@@ -1447,23 +1275,11 @@
     "category": "juice",
     "unit": "cl"
   },
-  "Tomato Juice": {
-    "category": "juice",
-    "unit": "cl"
-  },
-  "Tonic water": {
-    "category": "mixer",
-    "unit": "cl"
-  },
   "Tonic Water": {
     "category": "mixer",
     "unit": "cl"
   },
   "Triple sec": {
-    "category": "liqueur",
-    "unit": "cl"
-  },
-  "Triple Sec": {
     "category": "liqueur",
     "unit": "cl"
   },
@@ -1480,10 +1296,6 @@
     "unit": "tsp"
   },
   "Vanilla ice-cream": {
-    "category": "solid",
-    "unit": "cup"
-  },
-  "Vanilla Ice-Cream": {
     "category": "solid",
     "unit": "cup"
   },
@@ -1511,10 +1323,6 @@
     "category": "dairy",
     "unit": "cl"
   },
-  "Whipped Cream": {
-    "category": "dairy",
-    "unit": "cl"
-  },
   "Whipping cream": {
     "category": "dairy",
     "unit": "cl"
@@ -1529,10 +1337,6 @@
   },
   "White Creme de Menthe": {
     "category": "liqueur",
-    "unit": "cl"
-  },
-  "White rum": {
-    "category": "spirit",
     "unit": "cl"
   },
   "White Rum": {
@@ -1550,10 +1354,6 @@
   "Wine": {
     "category": "wine_vermouth",
     "unit": "cl"
-  },
-  "Worcestershire sauce": {
-    "category": "sauce",
-    "unit": "dash"
   },
   "Worcestershire Sauce": {
     "category": "sauce",
