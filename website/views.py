@@ -17,6 +17,8 @@ from website.utils import (
     resolve_known_ingredient,
     get_known_ingredient_names,
     merge_inventory_measures,
+    get_inventory_unit,
+    get_ingredient_inventory_units,
 )
 views = Blueprint('views', __name__) # set up view blueprint for flask app
 
@@ -69,6 +71,7 @@ def parties():
         inventory_items=_get_user_inventory(),
         inventory_return_to='/',
         known_ingredients=get_known_ingredient_names(),
+        ingredient_inventory_units=get_ingredient_inventory_units(),
     )
 
 
@@ -165,6 +168,7 @@ def partydetails():
         inventory_return_to=f'/partydetails?partyId={party_id}',
         user=current_user,
         known_ingredients=get_known_ingredient_names(),
+        ingredient_inventory_units=get_ingredient_inventory_units(),
     )
 
 
@@ -172,12 +176,12 @@ def partydetails():
 @login_required
 def add_inventory_item():
     ingredient = request.form.get('ingredient', '').strip()
-    measure = request.form.get('measure', '').strip()
+    quantity = request.form.get('measure_quantity', '').strip()
     return_to = request.form.get('return_to', '/')
     if not return_to.startswith('/') or return_to.startswith('//'):
         return_to = '/'
 
-    if not ingredient or not measure:
+    if not ingredient or not quantity:
         flash('Please enter both ingredient and amount.', category='error')
     else:
         canonical_ingredient = resolve_known_ingredient(ingredient)
@@ -187,6 +191,7 @@ def add_inventory_item():
                 category='error',
             )
         else:
+            measure = f"{quantity} {get_inventory_unit(canonical_ingredient)}"
             existing_items = _get_inventory_items_for_ingredient(
                 current_user.id,
                 canonical_ingredient,

@@ -1,4 +1,6 @@
 import re
+import json
+from pathlib import Path
 from fractions import Fraction
 
 from ..models import Cocktail, Ingredient, Rating, User
@@ -298,3 +300,30 @@ def get_cocktail_ratings_detail(cocktail_id, user_id=None):
         for rating, user in rows
     ]
     return {"summary": summary, "ratings": ratings}
+
+
+_INGREDIENT_UNIT_MAP = None
+
+
+def _ingredient_unit_map():
+    global _INGREDIENT_UNIT_MAP
+    if _INGREDIENT_UNIT_MAP is None:
+        path = Path(__file__).resolve().parent.parent / "jobs" / "ingredient_unit_map.json"
+        with path.open(encoding="utf-8") as f:
+            _INGREDIENT_UNIT_MAP = json.load(f)
+    return _INGREDIENT_UNIT_MAP
+
+
+def get_inventory_unit(ingredient):
+    """Standard unit for inventory entry (from ingredient_unit_map.json)."""
+    for name, entry in _ingredient_unit_map().items():
+        if name.lower() == ingredient.lower():
+            unit = entry.get("unit")
+            if unit in (None, "produce", "fruit"):
+                return "piece"
+            return unit
+    return "cl"
+
+
+def get_ingredient_inventory_units():
+    return {name: get_inventory_unit(name) for name in _ingredient_unit_map()}

@@ -43,7 +43,7 @@
         <div class="card__header">
             <div>
                 <h2 class="card__title">Add to inventory</h2>
-                <p class="card__subtitle">Pick an ingredient from the cocktail database and enter the amount you have on hand (e.g. 2 cl, 1 oz).</p>
+                <p class="card__subtitle">Pick an ingredient and enter the amount — the unit is fixed per ingredient.</p>
             </div>
         </div>
         <div class="card__body">
@@ -60,8 +60,12 @@
                         </datalist>
                     </div>
                     <div class="field col-6">
-                        <label class="field__label" for="inventory_measure">Amount</label>
-                        <input class="input" type="text" id="inventory_measure" name="measure" placeholder="70 cl" required />
+                        <label class="field__label" for="inventory_measure_quantity">Amount</label>
+                        <div class="measure-input">
+                            <input class="input measure-input__qty" type="text" id="inventory_measure_quantity"
+                                name="measure_quantity" placeholder="70" autocomplete="off" required />
+                            <span class="measure-input__unit" id="inventory_unit_label">cl</span>
+                        </div>
                     </div>
                 </div>
                 <div class="form-actions">
@@ -71,3 +75,22 @@
         </div>
     </div>
 </div>
+<script>
+(function () {
+    var units = {{ ingredient_inventory_units | tojson }};
+    var ing = document.getElementById('inventory_ingredient');
+    var label = document.getElementById('inventory_unit_label');
+    if (!ing || !label) return;
+    function sync() {
+        var name = ing.value.trim();
+        var unit = units[name];
+        if (!unit) {
+            var lower = name.toLowerCase();
+            for (var k in units) if (k.toLowerCase() === lower) { unit = units[k]; break; }
+        }
+        label.textContent = unit || 'cl';
+    }
+    ing.addEventListener('input', sync);
+    ing.addEventListener('change', sync);
+})();
+</script>
