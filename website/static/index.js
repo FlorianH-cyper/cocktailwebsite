@@ -322,12 +322,31 @@
             }
             fetch('/add-cocktail-to-party', {
                 method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     cocktailId: Number(cocktailId),
                     amount: Number(amount),
                     partyId: Number(partyId)
                 })
             }).then(function () { window.location.reload(); });
+            return;
+        }
+
+        const deleteInventoryBtn = e.target.closest('[data-delete-inventory-item]');
+        if (deleteInventoryBtn) {
+            e.preventDefault();
+            const inventoryItemId = deleteInventoryBtn.getAttribute('data-delete-inventory-item');
+            if (!confirm('Remove this item from your inventory?')) return;
+            fetch('/delete-inventory-item', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ inventoryItemId: Number(inventoryItemId) })
+            }).then(function (response) {
+                if (!response.ok) throw new Error('Delete failed');
+                window.location.reload();
+            }).catch(function () {
+                alert('Could not remove item. Please try again.');
+            });
         }
     });
 
@@ -357,22 +376,10 @@
             const partyId = el.getAttribute('data-party-id');
             fetch('/delete-menu-item', {
                 method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ menuitemId: Number(menuitemId) })
             }).then(function () {
                 window.location.href = '/partydetails?partyId=' + encodeURIComponent(partyId);
-            });
-        });
-    });
-
-    document.querySelectorAll('[data-delete-inventory-item]').forEach(function (el) {
-        el.addEventListener('click', function () {
-            const inventoryItemId = el.getAttribute('data-delete-inventory-item');
-            if (!confirm('Remove this item from your inventory?')) return;
-            fetch('/delete-inventory-item', {
-                method: 'DELETE',
-                body: JSON.stringify({ inventoryItemId: Number(inventoryItemId) })
-            }).then(function () {
-                window.location.reload();
             });
         });
     });

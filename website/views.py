@@ -177,7 +177,7 @@ def add_inventory_item():
 @views.route('/delete-inventory-item', methods=['DELETE'])
 @login_required
 def delete_inventory_item():
-    data = json.loads(request.data)
+    data = request.get_json(silent=True) or {}
     item_id = data.get('inventoryItemId')
     item = Inventoryitem.query.get(item_id)
     if item and item.user_id == current_user.id:
