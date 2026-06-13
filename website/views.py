@@ -13,6 +13,8 @@ from website.utils import (
     get_ratings_for_cocktails,
     get_cocktail_rating_summary,
     get_cocktail_ratings_detail,
+    resolve_known_ingredient,
+    get_known_ingredient_names,
 )
 views = Blueprint('views', __name__) # set up view blueprint for flask app
 
@@ -53,6 +55,7 @@ def parties():
         user=current_user,
         inventory_items=_get_user_inventory(),
         inventory_return_to='/',
+        known_ingredients=get_known_ingredient_names(),
     )
 
 
@@ -148,6 +151,7 @@ def partydetails():
         inventory_items=inventory,
         inventory_return_to=f'/partydetails?partyId={party_id}',
         user=current_user,
+        known_ingredients=get_known_ingredient_names(),
     )
 
 
@@ -163,13 +167,20 @@ def add_inventory_item():
     if not ingredient or not measure:
         flash('Please enter both ingredient and amount.', category='error')
     else:
-        db.session.add(Inventoryitem(
-            user_id=current_user.id,
-            ingredient=ingredient,
-            measure=measure,
-        ))
-        db.session.commit()
-        flash('Added to your inventory.', category='success')
+        canonical_ingredient = resolve_known_ingredient(ingredient)
+        if not canonical_ingredient:
+            flash(
+                'That ingredient is not in the cocktail database. Choose one from the suggestions.',
+                category='error',
+            )
+        else:
+            db.session.add(Inventoryitem(
+                user_id=current_user.id,
+                ingredient=canonical_ingredient,
+                measure=measure,
+            ))
+            db.session.commit()
+            flash('Added to your inventory.', category='success')
 
     return redirect(return_to)
 

@@ -1,9 +1,42 @@
 import re
 from fractions import Fraction
 
-from ..models import Cocktail, Rating, User
+from ..models import Cocktail, Ingredient, Rating, User
 from .. import db
 from sqlalchemy import func
+
+_INGREDIENT_LOOKUP_CACHE = None
+
+
+def _build_ingredient_lookup():
+    lookup = {}
+    for (name,) in Ingredient.query.with_entities(Ingredient.name).all():
+        if name:
+            lookup[name.lower()] = name
+    if not lookup:
+        for cocktail in Cocktail.query.all():
+            for i in range(1, 16):
+                name = getattr(cocktail, f'ingredient_{i}')
+                if name:
+                    lookup.setdefault(name.lower(), name)
+    return lookup
+
+
+def get_ingredient_lookup():
+    global _INGREDIENT_LOOKUP_CACHE
+    if _INGREDIENT_LOOKUP_CACHE is None:
+        _INGREDIENT_LOOKUP_CACHE = _build_ingredient_lookup()
+    return _INGREDIENT_LOOKUP_CACHE
+
+
+def resolve_known_ingredient(name):
+    if not name:
+        return None
+    return get_ingredient_lookup().get(name.strip().lower())
+
+
+def get_known_ingredient_names():
+    return sorted(get_ingredient_lookup().values(), key=str.lower)
 
 
 def get_cocktail_ingredients_and_measures(cocktail):

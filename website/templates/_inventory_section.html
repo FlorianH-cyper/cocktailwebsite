@@ -43,7 +43,7 @@
         <div class="card__header">
             <div>
                 <h2 class="card__title">Add to inventory</h2>
-                <p class="card__subtitle">Use the same ingredient names and units as in cocktail recipes (e.g. 2 cl, 1 oz).</p>
+                <p class="card__subtitle">Pick an ingredient from the cocktail database and enter the amount you have on hand (e.g. 2 cl, 1 oz).</p>
             </div>
         </div>
         <div class="card__body">
@@ -52,7 +52,12 @@
                 <div class="form-grid">
                     <div class="field col-6">
                         <label class="field__label" for="inventory_ingredient">Ingredient</label>
-                        <input class="input" type="text" id="inventory_ingredient" name="ingredient" placeholder="Vodka" required />
+                        <input class="input" type="text" id="inventory_ingredient" name="ingredient" list="known_ingredients" placeholder="Vodka" autocomplete="off" required />
+                        <datalist id="known_ingredients">
+                            {% for ingredient in known_ingredients %}
+                            <option value="{{ ingredient }}"></option>
+                            {% endfor %}
+                        </datalist>
                     </div>
                     <div class="field col-6">
                         <label class="field__label" for="inventory_measure">Amount</label>
