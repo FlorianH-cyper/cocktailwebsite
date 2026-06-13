@@ -1,5 +1,5 @@
-"""One-off helper: download cocktail images from TheCocktailDB and update the
-seed JSON to use local static paths under website/static/images/cocktails/."""
+"""One-off helper: download remote cocktail images and update the seed JSON to
+use local static paths under website/static/images/cocktails/."""
 
 import json
 import os

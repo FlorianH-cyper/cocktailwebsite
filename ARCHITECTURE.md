@@ -33,7 +33,7 @@ cocktailWebsite_new/
     ├── jobs/
     │   ├── cocktails_seed.json # Bundled cocktail catalog (633 drinks)
     │   ├── export_cocktails_seed.py  # Regenerates the seed file from a local DB
-    │   └── ...                 # Original RapidAPI import scripts (one-off)
+    │   └── ...                 # Legacy catalog maintenance scripts (one-off)
     ├── templates/              # Jinja2 HTML pages
     └── static/                 # index.js + styles.css
 ```
@@ -110,7 +110,7 @@ erDiagram
     }
 ```
 
-- `Cocktail` stores up to 15 ingredient/measure pairs as flat columns (mirrors TheCocktailDB API shape).
+- `Cocktail` stores up to 15 ingredient/measure pairs as flat columns (legacy import layout).
 - `Rating` stores one 1–5 star vote per user per cocktail (`unique_user_cocktail_rating`); averages are computed in `utils/` and rounded to one decimal.
 - When a cocktail is added to a party, `Shoppinglistitem` rows are created per ingredient; `utils/` aggregates them into the shopping list shown on the party details page.
 
@@ -139,7 +139,7 @@ All environment-specific settings come from environment variables, with safe loc
 
 ## Cocktail Seeding
 
-The cocktail catalog was originally imported from TheCocktailDB (RapidAPI) by the scripts in `website/jobs/`. Since the API key is no longer needed at runtime, the catalog now ships with the repo:
+The cocktail catalog ships with the repo and is loaded automatically on first start — no external API at runtime:
 
 1. `website/jobs/cocktails_seed.json` contains all 633 cocktails.
 2. On every app start, `website/seed.py` checks whether the `cocktail` table is empty.

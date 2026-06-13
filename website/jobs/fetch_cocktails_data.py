@@ -1,22 +1,35 @@
+"""Legacy one-off: pull cocktail records from a configured HTTP API.
+
+Requires COCKTAIL_API_URL plus any auth headers in .env (not committed).
+Day-to-day work should use cocktails_seed.json instead.
+"""
+
+import os
 import string
+
 import requests
 from dotenv import load_dotenv
-import os
 
 load_dotenv()
-key = os.getenv("KEY")
 
-
+url = os.getenv("COCKTAIL_API_URL", "")
 headers = {
-      "x-rapidapi-key": key,
-      "x-rapidapi-host": "the-cocktail-db.p.rapidapi.com"}
-    
-url = "https://the-cocktail-db.p.rapidapi.com/search.php"
+    name: value
+    for name, value in (
+        (os.getenv("COCKTAIL_API_AUTH_HEADER"), os.getenv("COCKTAIL_API_KEY")),
+        (os.getenv("COCKTAIL_API_HOST_HEADER"), os.getenv("COCKTAIL_API_HOST")),
+    )
+    if name and value
+}
 
 def fetch_all_cocktails():
+    if not url:
+        raise RuntimeError(
+            "COCKTAIL_API_URL is not set. This legacy import script is optional; "
+            "use cocktails_seed.json for the bundled catalog."
+        )
 
     all_cocktails_not_unique = []
-
     for letter in list(string.ascii_lowercase):
         cocktails_for_letter = fetch_cocktails_by_letter(letter)
         all_cocktails_not_unique += cocktails_for_letter
