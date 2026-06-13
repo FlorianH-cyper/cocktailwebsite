@@ -1,5 +1,8 @@
 """One-off helper: rewrite oz, shot, and ml measures in the cocktail seed file to cl.
 
+Superseded by normalize_measures.py, which performs full measure normalization.
+This script is kept for reference and partial conversions only.
+
 Uses 1 oz = 3 cl, 1 shot = 4 cl (US standard), and 10 ml = 1 cl. Handles
 integers, decimals, fractions, mixed numbers and ranges, keeping any descriptor
 text after the unit."""

@@ -1,0 +1,1582 @@
+{
+  "151 proof rum": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "7-Up": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "7-up": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Absinthe": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Absolut Citron": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Absolut Kurant": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Absolut Peppar": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Absolut Vodka": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Advocaat": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Agave Syrup": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Agave syrup": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Ale": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Allspice": {
+    "category": "spice",
+    "unit": "tsp"
+  },
+  "Almond": {
+    "category": "spice",
+    "unit": "tsp"
+  },
+  "Almond flavoring": {
+    "category": "extract",
+    "unit": "tsp"
+  },
+  "Amaretto": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Amaro Montenegro": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Angelica root": {
+    "category": "spice",
+    "unit": "tsp"
+  },
+  "Angostura bitters": {
+    "category": "bitters",
+    "unit": "dash"
+  },
+  "Angostura Bitters": {
+    "category": "bitters",
+    "unit": "dash"
+  },
+  "Anis": {
+    "category": "spice",
+    "unit": "tsp"
+  },
+  "Anise": {
+    "category": "spice",
+    "unit": "tsp"
+  },
+  "Anisette": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Aperol": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Apfelkorn": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Apple": {
+    "category": "produce",
+    "unit": "produce"
+  },
+  "Apple brandy": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Apple Brandy": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Apple cider": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Apple juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Apple schnapps": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Apple Schnapps": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Applejack": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Apricot": {
+    "category": "produce",
+    "unit": "produce"
+  },
+  "Apricot brandy": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Apricot Brandy": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Apricot Nectar": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Aquavit": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Asafoetida": {
+    "category": "spice",
+    "unit": "pinch"
+  },
+  "Añejo rum": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Bacardi Limon": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Baileys irish cream": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Banana": {
+    "category": "produce",
+    "unit": "produce"
+  },
+  "Banana liqueur": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Banana Liqueur": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Basil": {
+    "category": "herb",
+    "unit": "sprig"
+  },
+  "Beer": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Benedictine": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Berries": {
+    "category": "produce",
+    "unit": "produce"
+  },
+  "Bitter lemon": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Bitters": {
+    "category": "bitters",
+    "unit": "dash"
+  },
+  "Black pepper": {
+    "category": "spice",
+    "unit": "pinch"
+  },
+  "Black Sambuca": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Blackberries": {
+    "category": "produce",
+    "unit": "produce"
+  },
+  "Blackberry brandy": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Blackcurrant cordial": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Blackcurrant squash": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "blackstrap rum": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Blended Scotch": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Blended whiskey": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Blood Orange": {
+    "category": "citrus",
+    "unit": "fruit"
+  },
+  "Blue Curacao": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Blueberries": {
+    "category": "produce",
+    "unit": "produce"
+  },
+  "Blueberry schnapps": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Bourbon": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Brandy": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Brown sugar": {
+    "category": "syrup_sugar",
+    "unit": "tsp"
+  },
+  "Butter": {
+    "category": "solid",
+    "unit": "tblsp"
+  },
+  "Butterscotch schnapps": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Cachaca": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Campari": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Candy": {
+    "category": "solid",
+    "unit": "piece"
+  },
+  "Cantaloupe": {
+    "category": "produce",
+    "unit": "produce"
+  },
+  "Caramel coloring": {
+    "category": "premix",
+    "unit": "drop"
+  },
+  "caramel sauce": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Carbonated soft drink": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Carbonated water": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Cardamom": {
+    "category": "spice",
+    "unit": "tsp"
+  },
+  "Carrot": {
+    "category": "produce",
+    "unit": "produce"
+  },
+  "Cayenne pepper": {
+    "category": "spice",
+    "unit": "pinch"
+  },
+  "Celery salt": {
+    "category": "spice",
+    "unit": "pinch"
+  },
+  "Chambord raspberry liqueur": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Champagne": {
+    "category": "wine_vermouth",
+    "unit": "cl"
+  },
+  "Cherries": {
+    "category": "produce",
+    "unit": "produce"
+  },
+  "Cherry": {
+    "category": "garnish",
+    "unit": "piece"
+  },
+  "Cherry brandy": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Cherry Grenadine": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Cherry Heering": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Cherry Juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Cherry liqueur": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Chocolate": {
+    "category": "solid",
+    "unit": "piece"
+  },
+  "Chocolate ice-cream": {
+    "category": "solid",
+    "unit": "cup"
+  },
+  "Chocolate liqueur": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Chocolate milk": {
+    "category": "dairy",
+    "unit": "cl"
+  },
+  "chocolate sauce": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Chocolate Sauce": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Chocolate syrup": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Cider": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Cinnamon": {
+    "category": "spice",
+    "unit": "stick"
+  },
+  "Cloves": {
+    "category": "spice",
+    "unit": "tsp"
+  },
+  "Club soda": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Coca-Cola": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Cocoa powder": {
+    "category": "spice",
+    "unit": "tsp"
+  },
+  "Coconut liqueur": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Coconut Liqueur": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Coconut milk": {
+    "category": "dairy",
+    "unit": "cl"
+  },
+  "Coconut rum": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Coconut syrup": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Coffee": {
+    "category": "dairy",
+    "unit": "cl"
+  },
+  "Coffee brandy": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Coffee liqueur": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Cognac": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Cointreau": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Condensed milk": {
+    "category": "dairy",
+    "unit": "cl"
+  },
+  "Coriander": {
+    "category": "spice",
+    "unit": "tsp"
+  },
+  "Corn syrup": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Cornstarch": {
+    "category": "solid",
+    "unit": "tsp"
+  },
+  "Corona": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Cranberries": {
+    "category": "produce",
+    "unit": "produce"
+  },
+  "Cranberry juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Cranberry Juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Cranberry vodka": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Cream": {
+    "category": "dairy",
+    "unit": "cl"
+  },
+  "Cream of coconut": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Creme de Banane": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Creme De Banane": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Creme de Cacao": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Creme de Cassis": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Creme de Mure": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Crown Royal": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Cucumber": {
+    "category": "produce",
+    "unit": "produce"
+  },
+  "Cumin seed": {
+    "category": "spice",
+    "unit": "tsp"
+  },
+  "Curacao": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Daiquiri mix": {
+    "category": "premix",
+    "unit": "cl"
+  },
+  "Dark Creme de Cacao": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Dark rum": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Dark Rum": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "demerara Sugar": {
+    "category": "syrup_sugar",
+    "unit": "tsp"
+  },
+  "Dr. Pepper": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Drambuie": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Dry Vermouth": {
+    "category": "wine_vermouth",
+    "unit": "cl"
+  },
+  "Dubonnet Rouge": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Egg": {
+    "category": "solid",
+    "unit": "piece"
+  },
+  "Egg white": {
+    "category": "solid",
+    "unit": "piece"
+  },
+  "Egg White": {
+    "category": "solid",
+    "unit": "piece"
+  },
+  "Egg yolk": {
+    "category": "solid",
+    "unit": "piece"
+  },
+  "Egg Yolk": {
+    "category": "solid",
+    "unit": "piece"
+  },
+  "Elderflower cordial": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Erin Cream": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Espresso": {
+    "category": "dairy",
+    "unit": "cl"
+  },
+  "Everclear": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Falernum": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Fennel seeds": {
+    "category": "spice",
+    "unit": "tsp"
+  },
+  "Figs": {
+    "category": "produce",
+    "unit": "produce"
+  },
+  "Firewater": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Food coloring": {
+    "category": "solid",
+    "unit": "drop"
+  },
+  "Frangelico": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Fresca": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Fresh Lemon Juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Fresh Lime Juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Fruit": {
+    "category": "produce",
+    "unit": "produce"
+  },
+  "Fruit juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Fruit punch": {
+    "category": "premix",
+    "unit": "cl"
+  },
+  "Galliano": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Gin": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "gin": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Ginger": {
+    "category": "produce",
+    "unit": "produce"
+  },
+  "Ginger ale": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Ginger Beer": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Ginger beer": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Ginger Syrup": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Glycerine": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Godiva liqueur": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Gold rum": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Gold tequila": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Goldschlager": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Grain alcohol": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Grand Marnier": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Grape juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Grape soda": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Grape Soda": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Grapefruit juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Grapefruit Juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Grapes": {
+    "category": "produce",
+    "unit": "produce"
+  },
+  "Green Chartreuse": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Green Creme de Menthe": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Grenadine": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Guava juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Guinness stout": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Half-and-half": {
+    "category": "dairy",
+    "unit": "cl"
+  },
+  "Heavy cream": {
+    "category": "dairy",
+    "unit": "cl"
+  },
+  "Honey": {
+    "category": "syrup_sugar",
+    "unit": "tsp"
+  },
+  "Honey syrup": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Hot chocolate": {
+    "category": "dairy",
+    "unit": "cl"
+  },
+  "Hot Chocolate": {
+    "category": "dairy",
+    "unit": "cl"
+  },
+  "Hot Damn": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Hot Sauce": {
+    "category": "sauce",
+    "unit": "dash"
+  },
+  "Hpnotiq": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Ice": {
+    "category": "garnish",
+    "unit": null
+  },
+  "Iced tea": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Irish cream": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Irish whiskey": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Irish Whiskey": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Islay single malt Scotch": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Jack Daniels": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Jagermeister": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Jello": {
+    "category": "solid",
+    "unit": "package"
+  },
+  "Jim Beam": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Johnnie Walker": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Jägermeister": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Kahlua": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Kirschwasser": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Kiwi": {
+    "category": "produce",
+    "unit": "produce"
+  },
+  "Kiwi liqueur": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Kool-Aid": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Kummel": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Lager": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Lavender": {
+    "category": "herb",
+    "unit": "sprig"
+  },
+  "Lemon": {
+    "category": "citrus",
+    "unit": "fruit"
+  },
+  "lemon": {
+    "category": "citrus",
+    "unit": "fruit"
+  },
+  "Lemon juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Lemon Juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "lemon juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Lemon peel": {
+    "category": "garnish",
+    "unit": null
+  },
+  "Lemon Peel": {
+    "category": "garnish",
+    "unit": null
+  },
+  "Lemon vodka": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Lemon-lime soda": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Lemonade": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Licorice root": {
+    "category": "spice",
+    "unit": "tsp"
+  },
+  "Light cream": {
+    "category": "dairy",
+    "unit": "cl"
+  },
+  "Light rum": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Light Rum": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Lillet": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Lillet Blanc": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Lime": {
+    "category": "citrus",
+    "unit": "fruit"
+  },
+  "Lime juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Lime Juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Lime juice cordial": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Lime peel": {
+    "category": "garnish",
+    "unit": null
+  },
+  "Lime vodka": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Limeade": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Malibu rum": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Malibu Rum": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Mango": {
+    "category": "produce",
+    "unit": "produce"
+  },
+  "Maple syrup": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Maraschino cherry": {
+    "category": "garnish",
+    "unit": "piece"
+  },
+  "Maraschino Cherry": {
+    "category": "garnish",
+    "unit": "piece"
+  },
+  "Maraschino liqueur": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "maraschino liqueur": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Maraschino Liqueur": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Marjoram leaves": {
+    "category": "herb",
+    "unit": "tsp"
+  },
+  "Marshmallows": {
+    "category": "solid",
+    "unit": "piece"
+  },
+  "Maui": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Melon liqueur": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Melon Liqueur": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Mezcal": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Midori melon liqueur": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Milk": {
+    "category": "dairy",
+    "unit": "cl"
+  },
+  "Mini-snickers bars": {
+    "category": "solid",
+    "unit": "piece"
+  },
+  "Mint": {
+    "category": "herb",
+    "unit": "sprig"
+  },
+  "Mint syrup": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Mountain Dew": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Nutmeg": {
+    "category": "spice",
+    "unit": "pinch"
+  },
+  "Olive": {
+    "category": "garnish",
+    "unit": "piece"
+  },
+  "Olive Brine": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Orange": {
+    "category": "citrus",
+    "unit": "fruit"
+  },
+  "Orange bitters": {
+    "category": "bitters",
+    "unit": "dash"
+  },
+  "Orange Bitters": {
+    "category": "bitters",
+    "unit": "dash"
+  },
+  "Orange Curacao": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Orange juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Orange Juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "orange juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Orange peel": {
+    "category": "garnish",
+    "unit": null
+  },
+  "Orange Peel": {
+    "category": "garnish",
+    "unit": null
+  },
+  "Orange spiral": {
+    "category": "garnish",
+    "unit": null
+  },
+  "Oreo cookie": {
+    "category": "solid",
+    "unit": "piece"
+  },
+  "Orgeat syrup": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Orgeat Syrup": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Ouzo": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Papaya": {
+    "category": "produce",
+    "unit": "produce"
+  },
+  "Passion fruit juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Passion fruit syrup": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Passoa": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Peach Bitters": {
+    "category": "bitters",
+    "unit": "dash"
+  },
+  "Peach brandy": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Peach nectar": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Peach schnapps": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Peach Vodka": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Peachtree schnapps": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Pepper": {
+    "category": "spice",
+    "unit": "pinch"
+  },
+  "Peppermint extract": {
+    "category": "extract",
+    "unit": "tsp"
+  },
+  "Peppermint schnapps": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Pepsi Cola": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Pernod": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Peychaud bitters": {
+    "category": "bitters",
+    "unit": "dash"
+  },
+  "Pina colada mix": {
+    "category": "premix",
+    "unit": "cl"
+  },
+  "Pineapple": {
+    "category": "produce",
+    "unit": "produce"
+  },
+  "Pineapple juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Pineapple Juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "pineapple juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Pineapple Syrup": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Pink lemonade": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Pisang Ambon": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Pisco": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Pomegranate juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Port": {
+    "category": "wine_vermouth",
+    "unit": "cl"
+  },
+  "Powdered sugar": {
+    "category": "syrup_sugar",
+    "unit": "tsp"
+  },
+  "Prosecco": {
+    "category": "wine_vermouth",
+    "unit": "cl"
+  },
+  "Raisins": {
+    "category": "solid",
+    "unit": "cup"
+  },
+  "Raspberry Liqueur": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Raspberry syrup": {
+    "category": "syrup_sugar",
+    "unit": "tsp"
+  },
+  "Raspberry vodka": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Raspberry Vodka": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Red Chili Flakes": {
+    "category": "spice",
+    "unit": "pinch"
+  },
+  "Red wine": {
+    "category": "wine_vermouth",
+    "unit": "cl"
+  },
+  "Ricard": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Root beer": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Rose": {
+    "category": "wine_vermouth",
+    "unit": "cl"
+  },
+  "Rosemary": {
+    "category": "herb",
+    "unit": "sprig"
+  },
+  "Rosemary Syrup": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Roses sweetened lime juice": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Rosso Vermouth": {
+    "category": "wine_vermouth",
+    "unit": "cl"
+  },
+  "Ruby Port": {
+    "category": "wine_vermouth",
+    "unit": "cl"
+  },
+  "Rum": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Rumple Minze": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Rye whiskey": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Rye Whiskey": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Salt": {
+    "category": "spice",
+    "unit": "pinch"
+  },
+  "Salted Chocolate": {
+    "category": "solid",
+    "unit": "piece"
+  },
+  "Sambuca": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Sarsaparilla": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Schweppes Russchian": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Scotch": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Sherbet": {
+    "category": "solid",
+    "unit": "cup"
+  },
+  "Sherry": {
+    "category": "wine_vermouth",
+    "unit": "cl"
+  },
+  "Sirup of roses": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Sloe gin": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Soda water": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Soda Water": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Sour mix": {
+    "category": "premix",
+    "unit": "cl"
+  },
+  "Southern Comfort": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Soy Sauce": {
+    "category": "sauce",
+    "unit": "dash"
+  },
+  "Spiced rum": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Sprite": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "St. Germain": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Strawberries": {
+    "category": "produce",
+    "unit": "produce"
+  },
+  "Strawberry liqueur": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Strawberry schnapps": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Sugar": {
+    "category": "syrup_sugar",
+    "unit": "tsp"
+  },
+  "Sugar syrup": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Sugar Syrup": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Surge": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Sweet and sour": {
+    "category": "premix",
+    "unit": "cl"
+  },
+  "Sweet and Sour": {
+    "category": "premix",
+    "unit": "cl"
+  },
+  "Sweet Vermouth": {
+    "category": "wine_vermouth",
+    "unit": "cl"
+  },
+  "Tabasco sauce": {
+    "category": "sauce",
+    "unit": "dash"
+  },
+  "Tea": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Tennessee whiskey": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Tequila": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Thyme": {
+    "category": "herb",
+    "unit": "tsp"
+  },
+  "Tia maria": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Tomato juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Tomato Juice": {
+    "category": "juice",
+    "unit": "cl"
+  },
+  "Tonic water": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Tonic Water": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Triple sec": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Triple Sec": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Tropicana": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Vanilla": {
+    "category": "spice",
+    "unit": "piece"
+  },
+  "Vanilla extract": {
+    "category": "extract",
+    "unit": "tsp"
+  },
+  "Vanilla ice-cream": {
+    "category": "solid",
+    "unit": "cup"
+  },
+  "Vanilla Ice-Cream": {
+    "category": "solid",
+    "unit": "cup"
+  },
+  "Vanilla syrup": {
+    "category": "syrup_sugar",
+    "unit": "cl"
+  },
+  "Vermouth": {
+    "category": "wine_vermouth",
+    "unit": "cl"
+  },
+  "Vodka": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Water": {
+    "category": "mixer",
+    "unit": "cl"
+  },
+  "Watermelon": {
+    "category": "produce",
+    "unit": "produce"
+  },
+  "Whipped cream": {
+    "category": "dairy",
+    "unit": "cl"
+  },
+  "Whipped Cream": {
+    "category": "dairy",
+    "unit": "cl"
+  },
+  "Whipping cream": {
+    "category": "dairy",
+    "unit": "cl"
+  },
+  "Whiskey": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Whisky": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "White Creme de Menthe": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "White rum": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "White Rum": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "White Wine": {
+    "category": "wine_vermouth",
+    "unit": "cl"
+  },
+  "Wild Turkey": {
+    "category": "spirit",
+    "unit": "cl"
+  },
+  "Wine": {
+    "category": "wine_vermouth",
+    "unit": "cl"
+  },
+  "Worcestershire sauce": {
+    "category": "sauce",
+    "unit": "dash"
+  },
+  "Worcestershire Sauce": {
+    "category": "sauce",
+    "unit": "dash"
+  },
+  "Wormwood": {
+    "category": "spice",
+    "unit": "tsp"
+  },
+  "Yellow Chartreuse": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Yoghurt": {
+    "category": "dairy",
+    "unit": "cl"
+  },
+  "Yukon Jack": {
+    "category": "liqueur",
+    "unit": "cl"
+  },
+  "Zima": {
+    "category": "mixer",
+    "unit": "cl"
+  }
+}

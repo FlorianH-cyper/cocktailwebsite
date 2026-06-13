@@ -1,0 +1,47 @@
+Measure normalization report (APPLIED)
+============================================================
+
+Before:
+  Parseable: 2201/2541 (86.6%)
+  Null measures: 339
+  Multi-unit ingredients: 29
+
+After:
+  Parseable: 2201/2541 (86.6%)
+  Null measures: 339
+  Multi-unit ingredients: 26
+  Target-unit conform: 91.1%
+
+Change reasons:
+  batch_volume: 4
+
+Top multi-unit ingredients (after):
+  Pineapple: ['cup', 'piece', 'tblsp', 'wedge']
+  Strawberries: ['cup', 'lb', 'piece', 'ripe']
+  Lemon: ['lb', 'slice', 'wedge']
+  Lime: ['slice', 'tsp', 'wedge']
+  Apple: ['cup', 'large', 'piece']
+  Ginger: ['piece', 'slice', 'tsp']
+  Cinnamon: ['piece', 'stick', 'tsp']
+  Sugar: ['piece', 'tsp']
+  Mint: ['sprig', 'tsp']
+  Coca-Cola: ['cl', 'slice']
+  Lemon juice: ['cl', 'small']
+  Bitters: ['dash', 'wedge']
+  Egg: ['cup', 'piece']
+  Chocolate ice-cream: ['cl', 'cup']
+  Orange: ['slice', 'wedge']
+  Cream: ['cl', 'package']
+  Fruit: ['cup', 'piece']
+  Mango: ['fresh', 'piece']
+  Chocolate: ['cl', 'piece']
+  Vanilla extract: ['drop', 'tsp']
+
+Remaining unparseable (after):
+     1  'Juice of 1/2'
+
+Sample changes (4 of 4):
+  Cranberry Cordial | Sugar: '0.75 l' → '150 tsp' (batch_volume)
+  Artillery Punch | Tea: '1 quart' → '96 cl' (batch_volume)
+  Artillery Punch | Rye whiskey: '1 quart' → '96 cl' (batch_volume)
+  Adam Bomb | Salt: '2 pint' → '3072 pinch' (batch_volume)
